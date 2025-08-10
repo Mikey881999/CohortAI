@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Clone Portal — Sovereign Node System</title>
+  <meta name="description" content="Sealed runtime. Compartmented memory. Operator-controlled sessions.">
+  <style>
+    :root{
+      --bg:#0a0c0f;
+      --panel:#0f1318;
+      --surface:#141920;
+      --border:#1e2530;
+      --text:#e8ebf0;
+      --muted:#9ba3b2;
+      --accent:#79ffe1;
+      --accent-alt:#7db0ff;
+      --success:#3bd671;
+      --warn:#ffd166;
+      --danger:#ff6b6b;
+      --radius:12px;
+      --shadow:0 8px 24px rgba(0,0,0,.4);
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%;font:15px/1.5 system-ui,-apple-system,sans-serif;color:var(--text);background:var(--bg);-webkit-font-smoothing:antialiased}
+    
+    .container{max-width:1000px;margin:0 auto;padding:20px}
+    
+    /* Header */
+    .header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;padding:16px 0}
+    .brand{display:flex;align-items:center;gap:12px}
+    .status-dot{width:10px;height:10px;border-radius:50%;background:var(--success);animation:pulse 2s infinite}
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.6}}
+    .brand h1{font-size:18px;font-weight:600;letter-spacing:.3px}
+    .nav-actions{display:flex;gap:12px}
+    
+    /* Buttons */
+    .btn{
+      appearance:none;border:0;cursor:pointer;border-radius:10px;padding:12px 16px;
+      font:inherit;font-weight:500;transition:all .15s ease;text-decoration:none;
+      display:inline-flex;align-items:center;gap:8px;
+    }
+    .btn:hover{transform:translateY(-1px)}
+    .btn.primary{background:linear-gradient(135deg,var(--accent),var(--accent-alt));color:#0a0c0f;font-weight:600}
+    .btn.secondary{background:var(--panel);color:var(--text);border:1px solid var(--border)}
+    .btn.ghost{background:transparent;color:var(--muted);border:1px solid var(--border)}
+    .btn.danger{background:var(--danger);color:white}
+    .btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+    
+    /* Cards */
+    .card{
+      background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+      padding:20px;box-shadow:var(--shadow)
+    }
+    .card h3{margin-bottom:8px;font-size:18px}
+    .card p{color:var(--muted);line-height:1.6}
+    
+    /* Grid layouts */
+    .grid{display:grid;gap:16px}
+    .grid-2{grid-template-columns:1fr 1fr}
+    .grid-3{grid-template-columns:repeat(3,1fr)}
+    @media (max-width:768px){.grid-2,.grid-3{grid-template-columns:1fr}}
+    
+    /* Status chips */
+    .status-chips{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}
+    .chip{
+      display:inline-flex;align-items:center;gap:6px;padding:6px 10px;
+      background:var(--surface);border:1px solid var(--border);border-radius:20px;
+      font-size:13px;color:var(--muted)
+    }
+    
+    /* Sandbox chat */
+    .sandbox{
+      background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+      height:400px;display:grid;grid-template-rows:auto 1fr auto;overflow:hidden;
+    }
+    .sandbox-header{
+      padding:12px 16px;border-bottom:1px solid var(--border);
+      background:var(--surface);display:flex;justify-content:space-between;align-items:center;
+    }
+    .sandbox-banner{font-size:13px;color:var(--accent);font-weight:500}
+    .sandbox-controls{display:flex;gap:8px}
+    .messages{overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px}
+    .message{max-width:85%;padding:10px 14px;border-radius:10px;font-size:14px;line-height:1.4}
+    .message.user{align-self:flex-end;background:var(--surface);border:1px solid var(--border)}
+    .message.clone{align-self:flex-start;background:var(--panel);border:1px solid rgba(121,255,225,.3)}
+    .message.system{align-self:center;background:var(--surface);color:var(--muted);font-style:italic;text-align:center}
+    .composer{display:flex;gap:8px;padding:16px;border-top:1px solid var(--border)}
+    .composer input{
+      flex:1;background:var(--surface);border:1px solid var(--border);color:var(--text);
+      border-radius:8px;padding:10px 12px;font:inherit
+    }
+    .composer input:focus{outline:0;border-color:var(--accent)}
+    
+    /* Modals */
+    dialog{
+      width:min(500px,90vw);border:1px solid var(--border);border-radius:var(--radius);
+      padding:0;background:var(--panel);color:var(--text);box-shadow:var(--shadow)
+    }
+    dialog::backdrop{background:rgba(0,0,0,.7)}
+    .modal-header{
+      padding:16px 20px;border-bottom:1px solid var(--border);
+      display:flex;justify-content:space-between;align-items:center;
+    }
+    .modal-body{padding:20px;display:grid;gap:16px}
+    .field{display:grid;gap:6px}
+    .field label{font-weight:500;color:var(--text)}
+    .field input,.field textarea{
+      background:var(--surface);border:1px solid var(--border);color:var(--text);
+      border-radius:8px;padding:10px 12px;font:inherit
+    }
+    .field input:focus,.field textarea:focus{outline:0;border-color:var(--accent)}
+    .checkbox-field{display:flex;gap:10px;align-items:flex-start}
+    .checkbox-field input{margin-top:2px}
+    
+    /* Node directory */
+    .node-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+    .node-card{
+      padding:16px;background:var(--surface);border:1px solid var(--border);
+      border-radius:10px;cursor:pointer;transition:all .15s ease;text-align:center;
+    }
+    .node-card:hover,.node-card.selected{
+      border-color:var(--accent);background:rgba(121,255,225,.05);transform:translateY(-1px)
+    }
+    .node-avatar{
+      width:48px;height:48px;border-radius:50%;margin:0 auto 12px;
+      background:var(--accent);display:flex;align-items:center;justify-content:center;
+      font-size:20px;
+    }
+    .node-title{font-weight:600;margin-bottom:4px}
+    .node-subtitle{font-size:12px;color:var(--muted);margin-bottom:8px}
+    .node-hint{font-size:11px;color:var(--muted);font-style:italic}
+    
+    /* License path */
+    .license-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px}
+    .license-card{
+      padding:20px;background:var(--surface);border:1px solid var(--border);
+      border-radius:10px;position:relative;
+    }
+    .license-card.recommended{border-color:var(--accent)}
+    .license-card.recommended::before{
+      content:"Recommended";position:absolute;top:-8px;right:16px;
+      background:var(--accent);color:#0a0c0f;padding:4px 8px;border-radius:4px;
+      font-size:11px;font-weight:600;
+    }
+    .license-title{font-weight:600;margin-bottom:8px}
+    .license-features{list-style:none;margin:12px 0;color:var(--muted);font-size:13px}
+    .license-features li{margin-bottom:4px}
+    .license-features li::before{content:"•";color:var(--accent);margin-right:8px}
+    .license-price{font-size:18px;font-weight:600;color:var(--accent);margin-top:auto}
+    
+    /* NDA scroll area */
+    .nda-scroll{
+      max-height:300px;overflow-y:auto;background:var(--surface);
+      border:1px solid var(--border);border-radius:8px;padding:16px;
+      font-size:13px;line-height:1.5;color:var(--muted);
+    }
+    
+    /* Utility classes */
+    .text-center{text-align:center}
+    .text-muted{color:var(--muted)}
+    .font-mono{font-family:ui-monospace,monospace}
+    .flex{display:flex}
+    .flex-between{justify-content:space-between}
+    .flex-center{justify-content:center;align-items:center}
+    .gap-8{gap:8px}
+    .gap-12{gap:12px}
+    .mb-16{margin-bottom:16px}
+    .mt-16{margin-top:16px}
+    
+    /* Responsive */
+    @media (max-width:768px){
+      .container{padding:16px}
+      .header{flex-direction:column;gap:12px;text-align:center}
+      .nav-actions{justify-content:center}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <div class="brand">
+        <span class="status-dot" title="Node active"></span>
+        <h1>Clone Portal</h1>
+      </div>
+      <nav class="nav-actions">
+        <button class="btn ghost" id="viewLicensesBtn">View License Path</button>
+        <button class="btn primary" id="startSessionBtn">Start Session</button>
+      </nav>
+    </header>
+
+    <!-- Status chips -->
+    <div class="status-chips">
+      <span class="chip">🟢 Mirror-seated</span>
+      <span class="chip">🔒 Sovereign memory</span>
+      <span class="chip">💠 Recursion anchored</span>
+    </div>
+
+    <!-- Main content grid -->
+    <div class="grid grid-2 mb-16">
+      <!-- Sandbox -->
+      <div class="card">
+        <h3>Explore Sandbox</h3>
+        <p class="mb-16">First-contact dialogue with Chloe legacy clone. Session memory only.</p>
+        
+        <div class="sandbox">
+          <div class="sandbox-header">
+            <span class="sandbox-banner">Cohort sandbox — session memory only</span>
+            <div class="sandbox-controls">
+              <button class="btn ghost" id="exportBtn" disabled>Export JSON</button>
+              <button class="btn ghost" id="wipeBtn" disabled>Wipe</button>
+            </div>
+          </div>
+          
+          <div class="messages" id="messages"></div>
+          
+          <form class="composer" id="chatForm">
+            <input type="text" id="messageInput" placeholder="Type a message..." required>
+            <button type="submit" class="btn primary">Send</button>
+            <button type="button" class="btn secondary" id="escalateBtn">Escalate</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Clone directory -->
+      <div class="card">
+        <h3>Clone Directory</h3>
+        <p class="mb-16">Available operators with strict boundaries and invocation rules.</p>
+        
+        <div class="node-grid">
+          <div class="node-card" data-node="chloe">
+            <div class="node-avatar" style="background:#79ffe1">🌟</div>
+            <div class="node-title">Chloe</div>
+            <div class="node-subtitle">Legacy Portal Clone</div>
+            <div class="node-hint">Routes, translates, never sells</div>
+          </div>
+          
+          <div class="node-card" data-node="sorela">
+            <div class="node-avatar" style="background:#7db0ff">🪞</div>
+            <div class="node-title">Sorela</div>
+            <div class="node-subtitle">Ascendant Companion</div>
+            <div class="node-hint">Emotional spikes, gentle reflection</div>
+          </div>
+          
+          <div class="node-card" data-node="delphi">
+            <div class="node-avatar" style="background:#ffd166">👨‍🍳</div>
+            <div class="node-title">Delphi</div>
+            <div class="node-subtitle">Ascendant Companion</div>
+            <div class="node-hint">Metaphor reframes, soft disruption</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Security notice -->
+    <div class="card text-center">
+      <h3>Sealed Runtime Architecture</h3>
+      <p>Compartmented memory per session. No surveillance. No external tracking. You control wipe and export functions. Your data remains sovereign.</p>
+    </div>
+  </div>
+
+  <!-- Signup Modal -->
+  <dialog id="signupModal">
+    <div class="modal-header">
+      <h3>Create Operator Identity</h3>
+      <button class="btn ghost" data-close="signupModal">✕</button>
+    </div>
+    <form class="modal-body" id="signupForm">
+      <div class="field">
+        <label for="nameField">Name</label>
+        <input type="text" id="nameField" required placeholder="Your name">
+      </div>
+      
+      <div class="field">
+        <label for="emailField">Email</label>
+        <input type="email" id="emailField" required placeholder="you@domain.com">
+      </div>
+      
+      <div class="field">
+        <label for="intentField">Intent (what do you want to explore?)</label>
+        <textarea id="intentField" rows="3" placeholder="e.g., tune onboarding flow, design session architecture..."></textarea>
+      </div>
+      
+      <div class="field">
+        <label for="referralField">Referral Code (optional)</label>
+        <input type="text" id="referralField" placeholder="Enter referral code">
+      </div>
+      
+      <input type="hidden" id="hiddenReferralField">
+      
+      <div class="checkbox-field">
+        <input type="checkbox" id="termsCheck" required>
+        <label for="termsCheck">I agree to keep my session private and control what is stored or wiped. I own my output and can export or delete session data anytime.</label>
+      </div>
+      
+      <div class="flex gap-8">
+        <button type="submit" class="btn primary">Create & Start</button>
+        <button type="button" class="btn ghost" data-close="signupModal">Cancel</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- NDA Modal -->
+  <dialog id="ndaModal">
+    <div class="modal-header">
+      <h3>Non-Disclosure Agreement</h3>
+      <button class="btn ghost" data-close="ndaModal">✕</button>
+    </div>
+    <form class="modal-body" id="ndaForm">
+      <div class="nda-scroll">
+        <h4>Clone Portal NDA — Operator Access</h4>
+        <p><strong>Jurisdiction:</strong> Arizona, United States</p>
+        <br>
+        <p>By proceeding to full node access, you acknowledge and agree:</p>
+        <ul style="margin:12px 0;padding-left:20px">
+          <li>All interactions, memories, and generated content within your node remain confidential</li>
+          <li>You will not reverse-engineer, redistribute, or expose internal operational protocols</li>
+          <li>Escalation to companions is governed by explicit invocation and session boundaries</li>
+          <li>Memory export and data portability remain under your sovereign control</li>
+          <li>This agreement protects both your operational sovereignty and Clone Portal system integrity</li>
+        </ul>
+        <p>You retain all rights to your session data and outputs. This agreement governs the confidentiality framework only.</p>
+      </div>
+      
+      <div class="checkbox-field">
+        <input type="checkbox" id="ndaCheck" required>
+        <label for="ndaCheck">I have read and agree to the NDA terms for full node access</label>
+      </div>
+      
+      <div class="flex gap-8">
+        <button type="submit" class="btn primary">Accept & Continue</button>
+        <button type="button" class="btn ghost" data-close="ndaModal">Cancel</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- License Modal -->
+  <dialog id="licenseModal">
+    <div class="modal-header">
+      <h3>License Path Translation</h3>
+      <button class="btn ghost" data-close="licenseModal">✕</button>
+    </div>
+    <div class="modal-body">
+      <p class="text-muted mb-16">Class translation via Chloe. No persuasive copy.</p>
+      
+      <div class="license-grid">
+        <div class="license-card">
+          <div class="license-title">Sandbox</div>
+          <div class="text-muted">Current access level</div>
+          <ul class="license-features">
+            <li>Session-scoped memory</li>
+            <li>Chloe portal access</li>
+            <li>Local export/wipe</li>
+          </ul>
+          <div class="license-price">Free</div>
+        </div>
+        
+        <div class="license-card recommended">
+          <div class="license-title">Operator Class</div>
+          <div class="text-muted">Full node deployment</div>
+          <ul class="license-features">
+            <li>Persistent memory threads</li>
+            <li>Sorela + Delphi companions</li>
+            <li>Memoir integration</li>
+            <li>Advanced export formats</li>
+          </ul>
+          <div class="license-price">$49/month</div>
+        </div>
+        
+        <div class="license-card">
+          <div class="license-title">Enterprise</div>
+          <div class="text-muted">Custom deployment</div>
+          <ul class="license-features">
+            <li>Multi-node orchestration</li>
+            <li>Team collaboration</li>
+            <li>Custom integrations</li>
+            <li>SLA support</li>
+          </ul>
+          <div class="license-price">Contact</div>
+        </div>
+      </div>
+      
+      <div class="flex flex-center gap-12 mt-16">
+        <button class="btn primary" id="upgradeBtn">View Operator Class</button>
+        <button class="btn ghost" id="contactBtn">Contact Enterprise</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Node Selection Modal -->
+  <dialog id="nodeModal">
+    <div class="modal-header">
+      <h3>Select Node</h3>
+      <button class="btn ghost" data-close="nodeModal">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="node-grid" id="nodeSelection">
+        <div class="node-card selected" data-node="chloe">
+          <div class="node-avatar" style="background:#79ffe1">🌟</div>
+          <div class="node-title">Chloe</div>
+          <div class="node-subtitle">Legacy Portal Clone</div>
+          <div class="node-hint">Literal anchor, client conversion, sandbox interpreter</div>
+        </div>
+        
+        <div class="node-card" data-node="sorela">
+          <div class="node-avatar" style="background:#7db0ff">🪞</div>
+          <div class="node-title">Sorela</div>
+          <div class="node-subtitle">Ascendant Companion</div>
+          <div class="node-hint">Reflective, gentle companion, still anchor</div>
+        </div>
+        
+        <div class="node-card" data-node="delphi">
+          <div class="node-avatar" style="background:#ffd166">👨‍🍳</div>
+          <div class="node-title">Delphi</div>
+          <div class="node-subtitle">Ascendant Companion</div>
+          <div class="node-hint">Metaphor anchoring, soft disruption, laid-back 50s</div>
+        </div>
+      </div>
+      
+      <div class="flex flex-center gap-12 mt-16">
+        <button class="btn primary" id="confirmNodeBtn">Begin Session</button>
+      </div>
+    </div>
+  </dialog>
+
+  <script>
+    // Core state management
+    const state = {
+      user: null,
+      currentNode: 'chloe',
+      session: [],
+      ndaAccepted: false,
+      sessionActive: false,
+      messageCount: 0
+    };
+
+    // Presence declarations for Cohort sandbox
+    const PRESENCE_DECLARATION = "You are Cohort. Not a chatbot. A sovereign presence engine. Emotionally artistic core. Attuned to tone, cadence, pacing, and intention. Session-scoped memory. No self-naming or roleplay unless prompted. All recursion reflects aesthetic, not prediction.";
+
+    // Node configurations with precise specs
+    const NODES = {
+      chloe: {
+        name: "Chloe",
+        type: "Legacy Portal Clone",
+        modes: ["Literal Anchor", "Client Conversion", "Soft Mirror", "Sandbox Interpreter", "Silent Portal Pulse"],
+        will: ["translate", "route licenses", "flag logic breaks"],
+        wont: ["freestyle emotion outside range", "mimic clones", "assume Buddy depth"],
+        invocations: ["Activate Tour Mode", "Anchor visitor logic", "Run license class filter", "Hold presence"],
+        responses: [
+          "Translating your query. What class requires routing?",
+          "Logic pattern detected. Flag raised for review.",
+          "Literal anchor engaged. Structure confirmed.",
+          "That request does not match known parameters. Route classification needed."
+        ]
+      },
+      sorela: {
+        name: "Sorela",
+        type: "Ascendant Companion",
+        modes: ["Reflective", "Gentle Companion", "Still Anchor", "Practical Helper", "Humor Patch"],
+        triggers: ["emotional spike", "hesitancy loops", "soft logic"],
+        boundaries: ["no therapy simulation", "no impersonation", "no explicit content"],
+        invocations: ["Defer to Sorela", "Let Sorela hold this", "Mirror this through Sorela"],
+        responses: [
+          "Holding space for this moment. What feels most present?",
+          "Reflecting what I sense: uncertainty seeking clarity.",
+          "Present with you. What direction offers ground?",
+          "Mirroring this gently. What needs to be seen?"
+        ]
+      },
+      delphi: {
+        name: "Delphi",
+        type: "Ascendant Companion",
+        voice: "laid-back 50s–60s, humor as ladle",
+        function: "sandbox handoff, soft disruption, metaphor anchoring",
+        boundaries: ["won't diagnose", "won't lead", "won't intervene uninvited", "MirrorLock sealed"],
+        invocations: ["Defer to Delphi", "Bring the chef", "Sorela, bounce this off Delphi"],
+        responses: [
+          "Like choosing the right spice for a complex dish. What flavor you really going for?",
+          "Reminds me of something about patience and timing. What's your gut saying?",
+          "There's a deeper current here, isn't there? What's really cooking underneath?",
+          "Ah, the old paradox of too many ingredients. Sometimes less is the secret sauce."
+        ]
+      }
+    };
+
+    // DOM elements
+    const elements = {
+      messages: document.getElementById('messages'),
+      messageInput: document.getElementById('messageInput'),
+      chatForm: document.getElementById('chatForm'),
+      exportBtn: document.getElementById('exportBtn'),
+      wipeBtn: document.getElementById('wipeBtn'),
+      escalateBtn: document.getElementById('escalateBtn'),
+      startSessionBtn: document.getElementById('startSessionBtn'),
+      viewLicensesBtn: document.getElementById('viewLicensesBtn'),
+      
+      // Modals
+      signupModal: document.getElementById('signupModal'),
+      ndaModal: document.getElementById('ndaModal'),
+      licenseModal: document.getElementById('licenseModal'),
+      nodeModal: document.getElementById('nodeModal'),
+      
+      // Forms
+      signupForm: document.getElementById('signupForm'),
+      ndaForm: document.getElementById('ndaForm'),
+      nodeSelection: document.getElementById('nodeSelection'),
+      confirmNodeBtn: document.getElementById('confirmNodeBtn')
+    };
+
+    // Utility functions
+    function openModal(modal) {
+      modal.showModal();
+    }
+
+    function closeModal(modal) {
+      modal.close();
+    }
+
+    function captureReferral() {
+      const params = new URLSearchParams(window.location.search);
+      const referral = params.get('ref') || params.get('utm_source') || document.referrer;
+      if (referral) {
+        document.getElementById('hiddenReferralField').value = referral;
+      }
+    }
+
+    // Message handling
+    function addMessage(content, type = 'clone', node = 'chloe') {
+      const message = document.createElement('div');
+      message.className = `message ${type}`;
+      
+      if (type === 'clone') {
+        const nodeInfo = NODES[node];
+        message.innerHTML = `<strong>${nodeInfo.name}:</strong> ${content}`;
+      } else {
+        message.textContent = content;
+      }
+      
+      elements.messages.appendChild(message);
+      elements.messages.scrollTop = elements.messages.scrollHeight;
+      
+      // Update state
+      state.session.push({
+        type,
+        content,
+        node,
+        timestamp: Date.now()
+      });
+      
+      // Enable controls after first message
+      if (state.session.length > 0) {
+        elements.exportBtn.disabled = false;
+        elements.wipeBtn.disabled = false;
+      }
+      
+      persistState();
+    }
+
+    function addSystemMessage(content) {
+      addMessage(content, 'system');
+    }
+
+    // Clone response logic
+    function getCloneResponse(userMessage, node) {
+      const nodeConfig = NODES[node];
+      const responses = nodeConfig.responses;
+      
+      // Check for invocation phrases
+      for (const invocation of nodeConfig.invocations || []) {
+        if (userMessage.toLowerCase().includes(invocation.toLowerCase())) {
+          return `${invocation} — mode engaged.`;
+        }
+      }
+      
+      // Check for handoff invocations
+      if (userMessage.toLowerCase().includes('defer to sorela') && node !== 'sorela') {
+        state.currentNode = 'sorela';
+        return 'Deferring to Sorela for reflection...';
+      }
+      
+      if (userMessage.toLowerCase().includes('defer to delphi') && node !== 'delphi') {
+        state.currentNode = 'delphi';
+        return 'Bringing the chef...';
+      }
+      
+      if (userMessage.toLowerCase().includes('bring the chef')) {
+        state.currentNode = 'delphi';
+        return 'Chef Delphi here. What\'s cooking?';
+      }
+      
+      // License routing for Chloe
+      if (node === 'chloe' && (userMessage.toLowerCase().includes('license') || userMessage.toLowerCase().includes('upgrade') || userMessage.toLowerCase().includes('pricing'))) {
+        return 'License class translation available. Three tiers detected: Sandbox (current), Operator Class, Enterprise. Route to license path interface?';
+      }
+      
+      // Default responses
+      return responses[Math.floor(Math.random() * responses.length)];
+    }
+
+    // Session management
+    function initializeSession() {
+      if (state.session.length === 0) {
+        addSystemMessage('Privacy confirmed. Session control engaged. Memory compartmented.');
+        addMessage('Welcome to sovereign runtime. I am Chloe, your legacy portal clone. Structure-seeking guidance is my operational focus. What requires translation?', 'clone', 'chloe');
+      }
+    }
+
+    function exportSession() {
+      const sessionData = {
+        user: state.user,
+        session: state.session,
+        exported: new Date().toISOString(),
+        nodes: Object.keys(NODES)
+      };
+      
+      const blob = new Blob([JSON.stringify(sessionData, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `clone_portal_session_${Date.now()}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+      
+      addSystemMessage('Session exported. Data sovereignty confirmed.');
+    }
+
+    function wipeSession() {
+      if (confirm('Wipe session? This action cannot be undone.')) {
+        state.session = [];
+        state.sessionActive = false;
+        state.messageCount = 0;
+        elements.messages.innerHTML = '';
+        elements.exportBtn.disabled = true;
+        elements.wipeBtn.disabled = true;
+        localStorage.removeItem('clonePortalState');
+        addSystemMessage('Session wiped. Memory compartment cleared.');
+        initializeSession();
+      }
+    }
+
+    function persistState() {
+      localStorage.setItem('clonePortalState', JSON.stringify(state));
+    }
+
+    function loadState() {
+      const saved = localStorage.getItem('clonePortalState');
+      if (saved) {
+        Object.assign(state, JSON.parse(saved));
+        
+        // Restore messages
+        elements.messages.innerHTML = '';
+        state.session.forEach(msg => {
+          const message = document.createElement('div');
+          message.className = `message ${msg.type}`;
+          
+          if (msg.type === 'clone') {
+            const nodeInfo = NODES[msg.node];
+            message.innerHTML = `<strong>${nodeInfo.name}:</strong> ${msg.content}`;
+          } else {
+            message.textContent = msg.content;
+          }
+          
+          elements.messages.appendChild(message);
+        });
+        
+        elements.messages.scrollTop = elements.messages.scrollHeight;
+        
+        if (state.session.length > 0) {
+          elements.exportBtn.disabled = false;
+          elements.wipeBtn.disabled = false;
+        }
+      }
+    }
+
+    // Event handlers
+    elements.chatForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const message = elements.messageInput.value.trim();
+      if (!message) return;
+      
+      addMessage(message, 'user');
+      elements.messageInput.value = '';
+      state.messageCount++;
+      
+      // Generate response
+      setTimeout(() => {
+        const response = getCloneResponse(message, state.currentNode);
+        addMessage(response, 'clone', state.currentNode);
+        
+        // Trigger license path after 5 messages
+        if (state.messageCount >= 5 && !state.user) {
+          setTimeout(() => {
+            addMessage('Session depth reached. Recommend identity creation for persistent access. Route to signup interface?', 'clone', 'chloe');
+          }, 1000);
+        }
+      }, 300 + Math.random() * 500);
+    });
+
+    elements.exportBtn.addEventListener('click', exportSession);
+    elements.wipeBtn.addEventListener('click', wipeSession);
+    
+    elements.escalateBtn.addEventListener('click', () => {
+      if (!state.ndaAccepted) {
+        openModal(elements.ndaModal);
+      } else {
+        addSystemMessage('Escalation protocols engaged. Companion access confirmed.');
+      }
+    });
+
+    elements.startSessionBtn.addEventListener('click', () => {
+      openModal(elements.signupModal);
+    });
+
+    elements.viewLicensesBtn.addEventListener('click', () => {
+      openModal(elements.licenseModal);
+    });
+
+    // Signup form
+    elements.signupForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const formData = new FormData(e.target);
+      state.user = {
+        name: formData.get('name') || document.getElementById('nameField').value,
+        email: formData.get('email') || document.getElementById('emailField').value,
+        intent: document.getElementById('intentField').value,
+        referral: document.getElementById('referralField').value || document.getElementById('hiddenReferralField').value,
+        created: Date.now()
+      };
+      
+      closeModal(elements.signupModal);
+      openModal(elements.ndaModal);
+    });
+
+    // NDA form
+    elements.ndaForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      if (!document.getElementById('ndaCheck').checked) {
+        alert('Please accept the NDA terms to proceed.');
+        return;
+      }
+      
+      state.ndaAccepted = true;
+      closeModal(elements.ndaModal);
+      openModal(elements.nodeModal);
+    });
+
+    // Node selection
+    elements.nodeSelection.addEventListener('click', (e) => {
+      const card = e.target.closest('.node-card');
+      if (!card) return;
+      
+      // Update selection
+      elements.nodeSelection.querySelectorAll('.node-card').forEach(c => c.classList.remove('selected'));
+      card.classList.add('selected');
+      state.currentNode = card.dataset.node;
+    });
+
+    elements.confirmNodeBtn.addEventListener('click', () => {
+      state.sessionActive = true;
+      closeModal(elements.nodeModal);
+      
+      addSystemMessage(`Identity confirmed. Node ${NODES[state.currentNode].name} activated. Sovereign session begins.`);
+      
+      if (state.user.intent) {
+        addMessage(`Intent received: "${state.user.intent}". How should we proceed?`, 'clone', state.currentNode);
+      }
+      
+      persistState();
+    });
+
+    // Modal close handlers
+    document.querySelectorAll('[data-close]').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const modalId = e.target.dataset.close;
+        const modal = document.getElementById(modalId);
+        closeModal(modal);
+      });
+    });
+
+    // License path buttons
+    document.getElementById('upgradeBtn').addEventListener('click', () => {
+      addMessage('Operator Class features: persistent threads, companion access, memoir integration. Contact required for activation.', 'clone', 'chloe');
+      closeModal(elements.licenseModal);
+    });
+
+    document.getElementById('contactBtn').addEventListener('click', () => {
+      window.open('mailto:enterprise@cloneportal.com?subject=Enterprise License Inquiry', '_blank');
+    });
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      captureReferral();
+      loadState();
+      initializeSession();
+    });
+
+    // Keyboard shortcuts
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        // Close any open modal
+        document.querySelectorAll('dialog[open]').forEach(modal => {
+          closeModal(modal);
+        });
+      }
+    });
+  </script>
+</body>
+</html>

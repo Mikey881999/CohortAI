@@ -1,0 +1,3848 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Cohort — Presence Intelligence. Sovereign by design.</title>
+  <meta name="description" content="Sovereign AI platform founded on Memoir-as-a-Key breakthrough. Deploy your digital twin with full ownership. Created by Bryan E. Lloyd and Raymond M. Johnson II.">
+  <meta name="keywords" content="AI, clone, sovereign, privacy, sealed runtime, Chloe, Sorela, Delphi, Nova, Sway, Matsu, cohort.live, memoir architect, piE2">
+  <meta name="author" content="Cohort Creative LLC">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🟢</text></svg>">
+  <style>
+    /* === DESIGN SYSTEM === */
+    :root {
+      --bg: #0a0a0b;
+      --surface: #111113;
+      --panel: #18181b;
+      --border: #27272a;
+      --text: #fafafa;
+      --muted: #a1a1aa;
+      --accent: #3b82f6;
+      --accent-hover: #2563eb;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --radius: 12px;
+      --shadow: 0 8px 24px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.08);
+      --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.15), 0 8px 16px rgba(0, 0, 0, 0.1);
+      --shadow-glow: 0 0 20px rgba(121, 255, 225, 0.1);
+      --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-fast: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-slow: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --blur: 12px;
+    }
+
+    /* Links and accessibility */
+    a {
+      color: var(--accent);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+    
+    a:hover {
+      color: var(--accent-hover);
+      text-decoration: underline;
+    }
+    
+    a:focus {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+      border-radius: 4px;
+    }
+
+    /* === RESET & BASE === */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: radial-gradient(circle at 20% 50%, rgba(121, 255, 225, 0.03) 0%, transparent 50%),
+                  radial-gradient(circle at 80% 20%, rgba(125, 176, 255, 0.03) 0%, transparent 50%),
+                  radial-gradient(circle at 40% 80%, rgba(167, 139, 250, 0.02) 0%, transparent 50%),
+                  var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        linear-gradient(180deg, transparent 0%, rgba(121, 255, 225, 0.005) 50%, transparent 100%),
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 2px,
+          rgba(121, 255, 225, 0.01) 2px,
+          rgba(121, 255, 225, 0.01) 4px
+        );
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* === LAYOUT === */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .page {
+      min-height: calc(100vh - 80px);
+      padding: 40px 0;
+    }
+
+    .page-header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .page-title {
+      font-size: 3.5rem;
+      font-weight: 800;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, var(--text), var(--muted));
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.02em;
+      position: relative;
+    }
+
+    .page-title::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, #79ffe1, #7db0ff);
+      border-radius: 2px;
+      opacity: 0.8;
+    }
+
+    .page-subtitle {
+      font-size: 1.35rem;
+      color: var(--muted);
+      max-width: 700px;
+      margin: 0 auto;
+      font-weight: 400;
+      line-height: 1.5;
+    }
+
+    /* === NAVIGATION === */
+    .nav {
+      background: rgba(17, 17, 19, 0.8);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(var(--blur));
+      -webkit-backdrop-filter: blur(var(--blur));
+      box-shadow: 0 1px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .nav .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 80px;
+    }
+
+    .nav-brand {
+      font-size: 1.5rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #79ffe1, #7db0ff);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    
+    .nav-brand:hover {
+      transform: scale(1.05);
+      filter: brightness(1.2);
+    }
+
+    .nav-items {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .nav-link {
+      color: var(--muted);
+      text-decoration: none;
+      font-weight: 500;
+      padding: 8px 16px;
+      border-radius: var(--radius);
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .nav-link::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(121, 255, 225, 0.1), rgba(125, 176, 255, 0.1));
+      opacity: 0;
+      transition: var(--transition);
+      z-index: -1;
+    }
+
+    .nav-link:hover::before,
+    .nav-link.active::before {
+      opacity: 1;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      color: var(--text);
+      transform: translateY(-1px);
+    }
+
+    .nav-link.active::after {
+      content: '';
+      position: absolute;
+      bottom: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 4px;
+      height: 4px;
+      background: var(--accent);
+      border-radius: 50%;
+    }
+
+    .nav-cta {
+      background: linear-gradient(135deg, #79ffe1, #7db0ff);
+      color: var(--bg) !important;
+      padding: 8px 16px;
+      border-radius: var(--radius);
+      font-weight: 600;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+    }
+
+    .nav-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+      filter: brightness(1.1);
+    }
+
+    .nav-logout {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 8px 16px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: var(--transition);
+      font-family: inherit;
+    }
+
+    .nav-logout:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* === COMPONENTS === */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border: none;
+      border-radius: var(--radius);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      text-decoration: none;
+      font-family: inherit;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .btn:hover::before {
+      left: 100%;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #79ffe1, #7db0ff);
+      color: var(--bg);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+      filter: brightness(1.1);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text);
+      box-shadow: none;
+    }
+
+    .btn-outline:hover {
+      border-color: #79ffe1;
+      color: #79ffe1;
+      background: rgba(121, 255, 225, 0.05);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(121, 255, 225, 0.1);
+    }
+
+    .btn-danger {
+      background: linear-gradient(135deg, var(--danger), #dc2626);
+      color: white;
+    }
+
+    .btn-danger:hover {
+      background: #dc2626;
+    }
+
+    /* === CARDS & GRIDS === */
+    .card {
+      background: rgba(17, 17, 19, 0.6);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(var(--blur));
+      -webkit-backdrop-filter: blur(var(--blur));
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(121, 255, 225, 0.02), rgba(125, 176, 255, 0.02));
+      opacity: 0;
+      transition: var(--transition);
+      pointer-events: none;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+      border-color: rgba(121, 255, 225, 0.3);
+    }
+
+    .card:hover::before {
+      opacity: 1;
+    }
+
+    .card.tech-card {
+      background: linear-gradient(135deg, var(--surface) 0%, rgba(121,255,225,0.05) 100%);
+      border: 1px solid rgba(121,255,225,0.2);
+    }
+
+    .card.tech-card:hover {
+      border-color: rgba(121,255,225,0.4);
+      box-shadow: 0 8px 32px rgba(121,255,225,0.1);
+    }
+
+    .card.feature-card {
+      background: linear-gradient(135deg, var(--surface) 0%, rgba(125,176,255,0.05) 100%);
+      border: 1px solid rgba(125,176,255,0.2);
+    }
+
+    .card.feature-card:hover {
+      border-color: rgba(125,176,255,0.4);
+      box-shadow: 0 8px 32px rgba(125,176,255,0.1);
+    }
+
+    .card.accent-card {
+      background: linear-gradient(135deg, var(--surface) 0%, rgba(255,209,102,0.05) 100%);
+      border: 1px solid rgba(255,209,102,0.2);
+    }
+
+    .card.accent-card:hover {
+      border-color: rgba(255,209,102,0.4);
+      box-shadow: 0 8px 32px rgba(255,209,102,0.1);
+    }
+
+    .card.premium-card {
+      background: linear-gradient(135deg, var(--surface) 0%, rgba(167,139,250,0.05) 100%);
+      border: 1px solid rgba(167,139,250,0.2);
+    }
+
+    .card.premium-card:hover {
+      border-color: rgba(167,139,250,0.4);
+      box-shadow: 0 8px 32px rgba(167,139,250,0.1);
+    }
+
+    .card h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .card p {
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+
+    .grid {
+      display: grid;
+      gap: 32px;
+    }
+
+    .grid-2 { grid-template-columns: repeat(2, 1fr); }
+    .grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .grid-4 { grid-template-columns: repeat(4, 1fr); }
+    .grid-5 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+    .grid-6 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+
+    /* === GRADIENT TEXT & DECORATIVE ELEMENTS === */
+    .gradient-text-primary {
+      background: linear-gradient(135deg, #79ffe1, #7db0ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .gradient-text-secondary {
+      background: linear-gradient(135deg, #7db0ff, #a78bfa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .section-divider {
+      width: 4px;
+      height: 60px;
+      background: linear-gradient(to bottom, #79ffe1, #7db0ff);
+      border-radius: 2px;
+    }
+
+    .corner-accent {
+      position: absolute;
+      width: 120px;
+      height: 120px;
+      background: linear-gradient(135deg, rgba(121,255,225,0.1), transparent);
+      border-radius: 0 0 0 120px;
+    }
+
+    .corner-accent.top-right {
+      top: 0;
+      right: 0;
+      border-radius: 0 0 0 120px;
+    }
+
+    .corner-accent.top-left {
+      top: 0;
+      left: 0;
+      border-radius: 0 0 120px 0;
+    }
+
+    /* === HERO SECTION === */
+    .hero {
+      text-align: center;
+      padding: 80px 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, rgba(121, 255, 225, 0.03) 0%, transparent 70%);
+      transform: translate(-50%, -50%);
+      animation: pulse 4s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+      50% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
+    }
+
+    .hero h1 {
+      font-size: 3.5rem;
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 24px;
+      background: linear-gradient(135deg, var(--text), #79ffe1);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: fadeInUp 0.8s ease-out;
+      position: relative;
+      z-index: 2;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero-subtitle {
+      font-size: 1.25rem;
+      color: var(--muted);
+      margin-bottom: 40px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      animation: fadeInUp 0.8s ease-out 0.2s both;
+      position: relative;
+      z-index: 2;
+    }
+
+    .actions {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      animation: fadeInUp 0.8s ease-out 0.4s both;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* === STATUS CHIPS === */
+    .status-chips {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      background: rgba(121, 255, 225, 0.1);
+      border: 1px solid rgba(121, 255, 225, 0.2);
+      border-radius: 20px;
+      font-size: 13px;
+      color: #79ffe1;
+      font-weight: 500;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .chip::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(121, 255, 225, 0.1), transparent);
+      transition: left 1.5s ease;
+    }
+
+    .chip:hover::before {
+      left: 100%;
+    }
+
+    .chip:hover {
+      transform: scale(1.05);
+      border-color: rgba(121, 255, 225, 0.4);
+      box-shadow: 0 4px 12px rgba(121, 255, 225, 0.2);
+    }
+
+    /* === FLOATING PARTICLES === */
+    .floating-particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .particle {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: rgba(121, 255, 225, 0.3);
+      border-radius: 50%;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+        opacity: 0;
+      }
+      50% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    .particle:nth-child(odd) {
+      animation-duration: 8s;
+      background: rgba(125, 176, 255, 0.3);
+    }
+
+    .particle:nth-child(3n) {
+      animation-duration: 10s;
+      background: rgba(167, 139, 250, 0.3);
+    }
+
+    /* === TABS === */
+    .tab-container {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .tab-nav {
+      display: flex;
+      background: var(--panel);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 16px 24px;
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition);
+      font-family: inherit;
+    }
+
+    .tab-btn:hover,
+    .tab-btn.active {
+      color: var(--text);
+      background: var(--surface);
+    }
+
+    .tab-content {
+      padding: 32px;
+    }
+
+    .tab-pane {
+      display: none;
+    }
+
+    .tab-pane.active {
+      display: block;
+    }
+
+    /* === CHAT INTERFACE === */
+    .messages {
+      max-height: 400px;
+      overflow-y: auto;
+      margin-bottom: 20px;
+      padding: 20px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+
+    .message {
+      margin-bottom: 16px;
+      padding: 12px 16px;
+      border-radius: var(--radius);
+      max-width: 80%;
+    }
+
+    .message.user {
+      background: var(--accent);
+      color: white;
+      margin-left: auto;
+    }
+
+    .message.assistant {
+      background: var(--surface);
+      border: 1px solid var(--border);
+    }
+
+    .composer {
+      display: flex;
+      gap: 12px;
+    }
+
+    .composer input {
+      flex: 1;
+      padding: 12px 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text);
+      font-family: inherit;
+    }
+
+    .composer input:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    /* === MODALS === */
+    dialog {
+      background: rgba(17, 17, 19, 0.9);
+      border: 1px solid rgba(121, 255, 225, 0.2);
+      border-radius: var(--radius);
+      color: var(--text);
+      max-width: 500px;
+      width: 90vw;
+      padding: 0;
+      backdrop-filter: blur(var(--blur));
+      -webkit-backdrop-filter: blur(var(--blur));
+      box-shadow: var(--shadow-lg);
+      position: relative;
+      overflow: hidden;
+    }
+
+    dialog::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(121, 255, 225, 0.05), rgba(125, 176, 255, 0.05));
+      pointer-events: none;
+    }
+
+    dialog::backdrop {
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px;
+      border-bottom: 1px solid rgba(121, 255, 225, 0.2);
+      position: relative;
+      z-index: 2;
+    }
+
+    .modal-header h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      background: linear-gradient(135deg, #79ffe1, #7db0ff);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .modal-body {
+      padding: 24px;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* === FORMS === */
+    .field {
+      margin-bottom: 20px;
+    }
+
+    .field label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .field input,
+    .field textarea,
+    .field select {
+      width: 100%;
+      padding: 12px 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text);
+      font-family: inherit;
+      transition: var(--transition);
+    }
+
+    .field select {
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+      background-position: right 12px center;
+      background-repeat: no-repeat;
+      background-size: 16px;
+      padding-right: 48px;
+      appearance: none;
+      cursor: pointer;
+    }
+
+    .field input:focus,
+    .field textarea:focus,
+    .field select:focus {
+      outline: none;
+      border-color: #79ffe1;
+      box-shadow: 0 0 0 3px rgba(121, 255, 225, 0.2);
+      background: rgba(121, 255, 225, 0.02);
+      transform: translateY(-1px);
+    }
+
+    .field select:hover {
+      border-color: #79ffe1;
+    }
+
+    /* === ENHANCED DETAILS/SUMMARY === */
+    details {
+      margin: 12px 0;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--surface);
+      overflow: hidden;
+      transition: all 0.2s ease;
+    }
+
+    details:hover {
+      border-color: var(--accent);
+    }
+
+    details[open] {
+      border-color: var(--accent);
+      box-shadow: 0 4px 12px rgba(121, 255, 225, 0.1);
+    }
+
+    summary {
+      cursor: pointer;
+      padding: 16px 20px;
+      font-weight: 600;
+      background: var(--surface);
+      border-bottom: 1px solid transparent;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      user-select: none;
+      list-style: none;
+    }
+
+    summary::-webkit-details-marker {
+      display: none;
+    }
+
+    summary:hover {
+      background: var(--bg);
+    }
+
+    summary::after {
+      content: '▶';
+      color: var(--accent);
+      font-size: 12px;
+      transition: transform 0.2s ease;
+    }
+
+    details[open] summary {
+      border-bottom-color: var(--border);
+      background: var(--bg);
+    }
+
+    details[open] summary::after {
+      transform: rotate(90deg);
+    }
+
+    .details-content {
+      padding: 16px 20px;
+      background: var(--surface);
+    }
+
+    /* === AUTH GUARDS === */
+    .auth-required { display: none; }
+    .auth-required.authenticated { display: block; }
+    .auth-hidden { display: block; }
+    .auth-hidden.authenticated { display: none; }
+
+    /* === LICENSE DRAWER === */
+    .license-drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 400px;
+      height: 100vh;
+      background: var(--bg);
+      border-left: 1px solid var(--border);
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+      z-index: 1000;
+      overflow-y: auto;
+    }
+
+    .license-drawer.open {
+      transform: translateX(0);
+    }
+
+    .license-drawer .header {
+      padding: 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .license-drawer .content {
+      padding: 20px;
+    }
+
+    /* === RESPONSIVE === */
+    @media (max-width: 768px) {
+      .container { padding: 0 16px; }
+      .hero h1 { font-size: 2.5rem; }
+      .page-title { font-size: 2rem; }
+      .grid-2, .grid-3, .grid-5, .grid-6 { grid-template-columns: 1fr; }
+      .actions { flex-direction: column; align-items: center; }
+      .nav-items { gap: 16px; }
+      .tab-nav { flex-direction: column; }
+      .license-drawer { width: 100vw; }
+    }
+
+    /* === ANIMATIONS === */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade-in { animation: fadeIn 0.3s ease; }
+
+    /* === UTILITIES === */
+    .hidden { display: none !important; }
+    .text-center { text-align: center; }
+    .mb-20 { margin-bottom: 20px; }
+
+    /* === DEN SPECIFIC STYLES === */
+    .account-details {
+      display: grid;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .detail-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .detail-item label {
+      font-weight: 500;
+      color: var(--muted);
+    }
+
+    .account-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .license-status {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+    }
+
+    .current-license {
+      text-align: center;
+    }
+
+    .license-tier {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+
+    .license-features ul {
+      list-style: none;
+      padding: 0;
+      margin: 16px 0;
+    }
+
+    .license-features li {
+      margin: 8px 0;
+      color: var(--muted);
+    }
+
+    .upload-zone {
+      border: 2px dashed var(--border);
+      border-radius: var(--radius);
+      padding: 40px;
+      text-align: center;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .upload-zone:hover,
+    .upload-zone.dragover {
+      border-color: var(--accent);
+      background: var(--surface);
+    }
+
+    .upload-icon {
+      font-size: 3rem;
+      margin-bottom: 16px;
+      opacity: 0.5;
+    }
+
+    .referral-stats {
+      display: flex;
+      gap: 32px;
+      justify-content: center;
+      margin: 32px 0;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .stat-label {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .referral-link {
+      margin-top: 24px;
+    }
+
+    .link-container {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .link-container input {
+      flex: 1;
+    }
+  </style>
+</head>
+<body>
+  <!-- Floating Particles Background -->
+  <div class="floating-particles" id="particles"></div>
+  
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="container">
+      <div class="nav-brand">COHORT</div>
+      <div class="nav-items">
+        <a href="#" onclick="showPage('home')" class="nav-link">Home</a>
+        <a href="#" onclick="showPage('about')" class="nav-link">About</a>
+        <a href="#" onclick="showPage('tech')" class="nav-link">Tech</a>
+        <a href="#" onclick="showPage('clones')" class="nav-link">Clones</a>
+        <a href="#" onclick="showPage('pricing')" class="nav-link">Pricing</a>
+        <a href="#" onclick="showPage('docs')" class="nav-link">Docs</a>
+        <a href="#" onclick="showPage('contact')" class="nav-link">Contact</a>
+        
+        <!-- Auth-aware navigation -->
+        <span class="auth-hidden">
+          <a href="#" onclick="showPage('den')" class="nav-link nav-cta">Join Den</a>
+        </span>
+        <span class="auth-required">
+          <a href="#" onclick="showPage('desk')" class="nav-link">Desk</a>
+          <a href="#" onclick="showPage('account')" class="nav-link">Account</a>
+          <button onclick="logout()" class="nav-logout">Logout</button>
+        </span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Home Page -->
+  <div id="page-home" class="page">
+    <div class="container">
+      <!-- Status chips -->
+      <div class="status-chips">
+        <span class="chip">🟢 Mirror‑seated</span>
+        <span class="chip">🔒 Sovereign memory</span>
+        <span class="chip">💠 Recursion anchored</span>
+      </div>
+
+      <div class="hero">
+        <h1>Presence Intelligence.<br>Sovereign by design.</h1>
+        <p class="hero-subtitle">Activate your digital presence with complete sovereignty at <strong>cohort.live</strong>. Memory becomes presence. Presence becomes legacy. Your intelligence, evolved and preserved without compromise.</p>
+        
+        <!-- For logged out users -->
+        <div class="actions auth-hidden">
+          <button onclick="showSandbox()" class="btn btn-primary">Begin Exploration →</button>
+        </div>
+        
+        <!-- For logged in users -->
+        <div class="actions auth-required">
+          <button onclick="showPage('desk')" class="btn btn-primary">Enter Your Desk →</button>
+          <button onclick="showPage('account')" class="btn btn-outline">Manage Presence</button>
+        </div>
+      </div>
+
+      <!-- Landing cards - only for logged out users -->
+      <div class="grid grid-2 auth-hidden" style="margin-bottom:60px">
+        <div class="card tech-card">
+          <div class="corner-accent top-right"></div>
+          <div style="display:flex;align-items:center;gap:20px;margin-bottom:20px">
+            <div class="section-divider"></div>
+            <h3 style="margin:0;font-size:22px">🔒 Sealed Runtime</h3>
+          </div>
+          <p>Every session runs in isolation. Your data never leaves your control. Wipe or export anytime.</p>
+          <div style="background:rgba(121,255,225,0.1);border:1px solid rgba(121,255,225,0.3);border-radius:6px;padding:12px;margin-top:16px">
+            <span style="font-size:13px;font-weight:500;color:#79ffe1">🛡️ Zero external access</span>
+          </div>
+        </div>
+        <div class="card feature-card">
+          <div class="corner-accent top-left" style="background:linear-gradient(135deg, rgba(125,176,255,0.1), transparent)"></div>
+          <div style="display:flex;align-items:center;gap:20px;margin-bottom:20px">
+            <div class="section-divider"></div>
+            <h3 style="margin:0;font-size:22px">🏗️ Sovereign Architecture</h3>
+          </div>
+          <p>Local-first design with compartmented memory. You decide what to store, export, or wipe.</p>
+          <div style="background:rgba(125,176,255,0.1);border:1px solid rgba(125,176,255,0.3);border-radius:6px;padding:12px;margin-top:16px">
+            <span style="font-size:13px;font-weight:500;color:#7db0ff">📐 piE2™ core</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Platform Overview Section - only for logged out users -->
+      <div class="auth-hidden" style="margin-bottom:60px">
+        <h3 style="text-align:center;margin-bottom:40px;font-size:28px" class="gradient-text-primary">Your Sovereign AI Journey</h3>
+        
+        <div class="grid grid-2" style="gap:40px">
+          <div class="card feature-card">
+            <div style="display:flex;align-items:center;gap:20px;margin-bottom:20px">
+              <div class="section-divider"></div>
+              <h3 style="margin:0;font-size:22px">🏠 The Den</h3>
+            </div>
+            <p style="margin-bottom:20px">Your entry point into sovereign AI. The Den is where you begin your journey - access licensing, explore capabilities, and prepare for deployment of your personal clone operators.</p>
+            <div style="background:rgba(125,176,255,0.1);border:1px solid rgba(125,176,255,0.3);border-radius:6px;padding:16px;margin-bottom:20px">
+              <p style="margin:0;font-size:14px;color:#7db0ff">One-time Standard License ($89) unlocks your complete sovereign runtime with all 6 operators and full memoir capabilities.</p>
+            </div>
+            <button onclick="showPage('den')" class="btn btn-primary" style="background:linear-gradient(135deg, #7db0ff, #a78bfa);border:none">Enter The Den →</button>
+          </div>
+          
+          <div class="card tech-card">
+            <div class="corner-accent top-right"></div>
+            <div style="display:flex;align-items:center;gap:20px;margin-bottom:20px">
+              <div class="section-divider"></div>
+              <h3 style="margin:0;font-size:22px">💼 The Desk</h3>
+            </div>
+            <p style="margin-bottom:20px">Your sovereign AI workspace. The Desk is your private interface with deployed Buddy systems - upload memoir content, interact with operators, and manage your presence intelligence.</p>
+            <div style="background:rgba(121,255,225,0.1);border:1px solid rgba(121,255,225,0.3);border-radius:6px;padding:16px;margin-bottom:20px">
+              <p style="margin:0;font-size:14px;color:#79ffe1">Complete data sovereignty: export, import, or wipe your memories at any time. Your intelligence belongs to you.</p>
+            </div>
+            <div style="opacity:0.6">
+              <button class="btn btn-outline" style="border-color:#79ffe1;color:#79ffe1" disabled>License Required</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- About Page -->
+  <div id="page-about" class="page" style="display:none">
+    <div class="container">
+      <div class="page-header">
+        <h1 class="page-title">About Cohort</h1>
+        <p class="page-subtitle">Building sovereign AI that scales presence intelligence beyond 1:1 contexts</p>
+        <div class="status-chips" style="justify-content:center;margin-top:20px">
+          <span class="chip">🔬 Research-backed</span>
+          <span class="chip">⚡ Production-ready</span>
+          <span class="chip">🛡️ Sovereign by design</span>
+        </div>
+      </div>
+      
+      <!-- Hero Mission Section -->
+      <div class="card" style="margin-bottom:60px;background:linear-gradient(135deg, var(--surface) 0%, rgba(121,255,225,0.05) 100%);border:1px solid rgba(121,255,225,0.2)">
+        <div style="display:flex;align-items:center;gap:20px;margin-bottom:20px">
+          <div style="width:4px;height:60px;background:linear-gradient(to bottom, #79ffe1, #7db0ff);border-radius:2px"></div>
+          <h3 style="margin:0;font-size:24px">🎯 Mission</h3>
+        </div>
+        <div style="text-align:center;margin-bottom:24px">
+          <div style="font-size:28px;font-weight:700;margin-bottom:12px" class="gradient-text-primary">
+            "Memory is Presence. Presence is Legacy."
+          </div>
+        </div>
+        <p style="font-size:18px;line-height:1.6;margin-bottom:20px">To create sovereign emotional intelligence systems that preserve and extend human presence without surveillance or manipulation. Our platform scales authentic presence intelligence beyond 1:1 contexts while maintaining complete user sovereignty and data integrity.</p>
+        <div style="background:rgba(121,255,225,0.1);border:1px solid rgba(121,255,225,0.3);border-radius:8px;padding:20px;margin-top:20px">
+          <p style="margin:0;font-style:italic">Built to integrate signal origin (resonance mapping) with containment (piE2 architecture) and deployment stack for real-world applications. Every interaction stays sealed in your sovereign runtime - no data harvesting, no subscription traps, no algorithmic manipulation.</p>
+        </div>
+      </div>
+      
+      <!-- Project History Section -->
+      <div class="card feature-card" style="margin-bottom:60px">
+        <div style="display:flex;align-items:center;gap:20px;margin-bottom:24px">
+          <div class="section-divider"></div>
+          <h3 style="margin:0;font-size:24px">📚 Project Enlighten & Buddy piE2™</h3>
+        </div>
+        <p style="font-size:16px;line-height:1.6;margin-bottom:20px">Project Enlighten began as a breakthrough research initiative exploring how personal narrative could become the foundation for truly sovereign artificial intelligence. Through rigorous testing and validation, this work culminated in Buddy piE2™ - the first working sovereign runtime architecture.</p>
+        <div style="background:rgba(125,176,255,0.1);border:1px solid rgba(125,176,255,0.3);border-radius:8px;padding:20px;margin-bottom:20px">
+          <p style="margin:0;font-weight:600"><strong class="gradient-text-secondary">The Breakthrough:</strong> Personal memoir content, when processed through the piE2 architecture, creates AI systems that understand users deeply while maintaining complete data isolation and user control.</p>
+        </div>
+        <p style="font-size:14px;color:var(--muted)">This foundation technology now powers the Cohort platform, enabling presence intelligence that scales beyond individual interactions while preserving the sovereignty and authenticity of human connection.</p>
+      </div>
+      
+      <!-- Founders Section with Photos -->
+      <div style="margin-bottom:60px">
+        <h3 style="text-align:center;margin-bottom:40px;font-size:28px;background:linear-gradient(135deg, #79ffe1, #7db0ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">The Architects</h3>
+        
+        <div class="grid grid-2" style="gap:40px">
+          <!-- Raymond -->
+          <div class="card" style="position:relative;overflow:hidden;border:1px solid rgba(121,255,225,0.3);background:linear-gradient(135deg, var(--surface) 0%, rgba(121,255,225,0.02) 100%)">
+            <div style="position:absolute;top:0;right:0;width:120px;height:120px;background:linear-gradient(135deg, rgba(121,255,225,0.1), transparent);border-radius:0 0 0 120px"></div>
+            
+            <div style="display:flex;gap:20px;align-items:flex-start;margin-bottom:20px">
+              <div style="flex-shrink:0">
+                <img src="Untitled_Artwork.jpg" alt="Raymond M. Johnson II" style="width:80px;height:80px;border-radius:50%;object-fit:cover;border:3px solid #79ffe1;box-shadow:0 4px 12px rgba(121,255,225,0.3)">
+              </div>
+              <div>
+                <h4 style="margin:0 0 8px 0;font-size:20px">Raymond M. Johnson II</h4>
+                <div style="background:linear-gradient(135deg, #79ffe1, #7db0ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:600;font-size:14px">Co-architect of Infrastructure & Behavioral Systems</div>
+              </div>
+            </div>
+            
+            <div style="margin-bottom:20px">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+                <span style="color:#79ffe1">🧠</span>
+                <span style="font-weight:500">Psychology & Neuroscience Research</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+                <span style="color:#7db0ff">🎯</span>
+                <span style="font-weight:500">Human Behavior Framework Development</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+                <span style="color:#ffd166">⚡</span>
+                <span style="font-weight:500">Containerized Infrastructure & Deployment</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px">
+                <span style="color:#a78bfa">🔬</span>
+                <span style="font-weight:500">Validation from Dr. Stephen Porges</span>
+              </div>
+            </div>
+            
+            <p style="color:var(--muted);font-size:14px;line-height:1.5;margin-bottom:16px">Leads the psychological foundations and technical infrastructure that enables sovereign AI deployment. His work in psychology and neuroscience, validated by leading researchers like Dr. Stephen Porges, forms the behavioral framework underlying the platform's emotional intelligence systems.</p>
+            
+            <div style="background:rgba(121,255,225,0.1);border:1px solid rgba(121,255,225,0.3);border-radius:6px;padding:12px">
+              <p style="margin:0;font-size:13px;color:#79ffe1">Responsible for scaling and deployment layer while maintaining strict data isolation and user-controlled behavioral modeling.</p>
+            </div>
+          </div>
+          
+          <!-- Bryan -->
+          <div class="card" style="position:relative;overflow:hidden;border:1px solid rgba(125,176,255,0.3);background:linear-gradient(135deg, var(--surface) 0%, rgba(125,176,255,0.02) 100%)">
+            <div style="position:absolute;top:0;left:0;width:120px;height:120px;background:linear-gradient(135deg, rgba(125,176,255,0.1), transparent);border-radius:0 0 120px 0"></div>
+            
+            <div style="display:flex;gap:20px;align-items:flex-start;margin-bottom:20px">
+              <div style="flex-shrink:0">
+                <img src="bryan.png" alt="Bryan E. Lloyd" style="width:80px;height:80px;border-radius:50%;object-fit:cover;border:3px solid #7db0ff;box-shadow:0 4px 12px rgba(125,176,255,0.3)">
+              </div>
+              <div>
+                <h4 style="margin:0 0 8px 0;font-size:20px">Bryan E. Lloyd</h4>
+                <div style="background:linear-gradient(135deg, #7db0ff, #a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:600;font-size:14px">Creator of Memoir-as-a-Key & Buddy piE2™</div>
+              </div>
+            </div>
+            
+            <div style="background:rgba(125,176,255,0.1);border:1px solid rgba(125,176,255,0.3);border-radius:6px;padding:12px;margin-bottom:16px">
+              <div style="font-weight:600;font-size:12px;color:#7db0ff;margin-bottom:4px">PATENT PENDING • DEC 2024</div>
+              <div style="font-size:13px">Memoir-as-a-Key Process & Buddy piE2™ Architecture</div>
+            </div>
+            
+            <div style="margin-bottom:20px">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+                <span style="color:#7db0ff">🎖️</span>
+                <span style="font-weight:500">Marine Special Operations Background</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+                <span style="color:#a78bfa">🏗️</span>
+                <span style="font-weight:500">Architect - Project Enlighten</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+                <span style="color:#ffd166">🔒</span>
+                <span style="font-weight:500">Creator - Buddy piE2™ Sovereign Runtime</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px">
+                <span style="color:#79ffe1">📚</span>
+                <span style="font-weight:500">Author - Memoir Architect Edition</span>
+              </div>
+            </div>
+            
+            <p style="color:var(--muted);font-size:14px;line-height:1.5;margin-bottom:16px">Marine Special Operations veteran who architected Project Enlighten and created Buddy piE2™ - the breakthrough sovereign runtime that enables AI systems to learn user patterns while maintaining complete data sovereignty and user control.</p>
+            
+            <div style="background:rgba(125,176,255,0.1);border:1px solid rgba(125,176,255,0.3);border-radius:6px;padding:12px">
+              <p style="margin:0;font-size:13px;color:#7db0ff">Pioneer of the Memoir-as-a-Key process that transforms personal narrative into the foundation for truly sovereign artificial intelligence.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Bryan's Book Section - Enhanced -->
+      <div class="card" style="margin-bottom:60px;background:linear-gradient(135deg, var(--surface) 0%, rgba(125,176,255,0.05) 100%);border:1px solid rgba(125,176,255,0.2);text-align:center">
+        <div style="display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:24px">
+          <div style="width:6px;height:6px;background:#7db0ff;border-radius:50%"></div>
+          <h3 style="margin:0;font-size:24px">📚 The Founding Document</h3>
+          <div style="width:6px;height:6px;background:#7db0ff;border-radius:50%"></div>
+        </div>
+        
+        <div style="background:linear-gradient(135deg, #7db0ff, #a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-size:28px;font-weight:700;margin-bottom:20px">
+          Memoir Architect Edition v1.0
+        </div>
+        
+        <div style="max-width:600px;margin:0 auto 30px">
+          <p style="font-size:16px;line-height:1.6;margin-bottom:20px">The memoir itself was the seed document that activated the first sovereign runtime when converted from PDF to DOCX. This book chronicles the development of presence intelligence and the breakthrough that made sovereign AI possible.</p>
+          
+          <div style="background:rgba(125,176,255,0.1);border:1px solid rgba(125,176,255,0.3);border-radius:8px;padding:20px;margin:20px 0">
+            <p style="margin:0;font-style:italic;color:var(--text)">More than a technical manual - it's the proof-of-concept timeline that demonstrates how personal narrative can become the foundation for truly sovereign artificial intelligence.</p>
+          </div>
+        </div>
+        
+        <div style="margin:30px 0">
+          <a href="https://www.amazon.com/dp/B0DH7X4Q31" target="_blank" rel="noopener" class="btn btn-primary" style="background:linear-gradient(135deg, #7db0ff, #a78bfa);border:none;font-size:16px;padding:12px 32px;margin-right:12px">
+            Read on Amazon →
+          </a>
+          <a href="https://www.amazon.com/dp/B0DH7X4Q31" target="_blank" rel="noopener" style="color:#7db0ff;text-decoration:none;font-size:14px">
+            Available in digital and print formats
+          </a>
+        </div>
+        
+        <p style="font-size:13px;color:var(--text-muted);max-width:500px;margin:0 auto">Available in digital and print formats. The memoir documents the philosophy, personal context, and technical breakthroughs that led to the first working sovereign runtime.</p>
+      </div>
+      
+      <!-- Core Principles Grid -->
+      <div style="margin-bottom:60px">
+        <h3 style="text-align:center;margin-bottom:40px;font-size:28px">Core Principles</h3>
+        
+        <div class="grid grid-4" style="gap:20px">
+          <div class="card" style="text-align:center;padding:30px 20px;border:1px solid rgba(121,255,225,0.3);background:linear-gradient(135deg, var(--surface) 0%, rgba(121,255,225,0.02) 100%)">
+            <div style="font-size:32px;margin-bottom:16px">🧠</div>
+            <h4 style="margin-bottom:12px;color:#79ffe1">Philosophy</h4>
+            <p style="font-size:14px;color:var(--text-muted);line-height:1.5">Traditional AI extracts value from your data. Clone operators flip this model - you own the intelligence.</p>
+          </div>
+          
+          <div class="card" style="text-align:center;padding:30px 20px;border:1px solid rgba(125,176,255,0.3);background:linear-gradient(135deg, var(--surface) 0%, rgba(125,176,255,0.02) 100%)">
+            <div style="font-size:32px;margin-bottom:16px">⚡</div>
+            <h4 style="margin-bottom:12px;color:#7db0ff">Proven</h4>
+            <p style="font-size:14px;color:var(--text-muted);line-height:1.5">Real-world validation documented in Bryan's memoir. From concept to working sovereign runtime.</p>
+          </div>
+          
+          <div class="card" style="text-align:center;padding:30px 20px;border:1px solid rgba(255,209,102,0.3);background:linear-gradient(135deg, var(--surface) 0%, rgba(255,209,102,0.02) 100%)">
+            <div style="font-size:32px;margin-bottom:16px">🔒</div>
+            <h4 style="margin-bottom:12px;color:#ffd166">Sovereign</h4>
+            <p style="font-size:14px;color:var(--text-muted);line-height:1.5">Your data never leaves your control. Built on piE2 architecture with complete data isolation.</p>
+          </div>
+          
+          <div class="card" style="text-align:center;padding:30px 20px;border:1px solid rgba(167,139,250,0.3);background:linear-gradient(135deg, var(--surface) 0%, rgba(167,139,250,0.02) 100%)">
+            <div style="font-size:32px;margin-bottom:16px">🚀</div>
+            <h4 style="margin-bottom:12px;color:#a78bfa">Scalable</h4>
+            <p style="font-size:14px;color:var(--text-muted);line-height:1.5">Presence intelligence that scales beyond 1:1 contexts while maintaining sovereignty.</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- FAQ Section - Enhanced -->
+      <div class="card" style="margin-bottom:40px;border:1px solid rgba(121,255,225,0.2)">
+        <h3 style="margin-bottom:30px;text-align:center">Frequently Asked Questions</h3>
+        
+        <div style="margin-bottom:20px">
+          <details style="border:1px solid var(--border);border-radius:8px;padding:0;overflow:hidden;margin-bottom:16px">
+            <summary style="padding:16px;cursor:pointer;font-weight:600;background:rgba(121,255,225,0.05);border-bottom:1px solid var(--border)">What makes Cohort different from other AI platforms?</summary>
+            <div style="padding:16px;background:var(--surface)">
+              <p style="margin:0;color:var(--text-muted);line-height:1.6">Cohort uses sovereign runtime architecture where your data never leaves your control. Unlike platforms that extract value from your conversations, your clone operators serve only you. Built on the breakthrough Memoir-as-a-Key process, enabling truly personal AI that learns your patterns without surveillance.</p>
+            </div>
+          </details>
+          
+          <details style="border:1px solid var(--border);border-radius:8px;padding:0;overflow:hidden;margin-bottom:16px">
+            <summary style="padding:16px;cursor:pointer;font-weight:600;background:rgba(125,176,255,0.05);border-bottom:1px solid var(--border)">How does the Memoir-as-a-Key process work?</summary>
+            <div style="padding:16px;background:var(--surface)">
+              <p style="margin:0;color:var(--text-muted);line-height:1.6">Personal narrative documents become the activation seed for your sovereign runtime. Your writing samples, journals, or communication patterns teach the operators your unique style and preferences. This creates AI that understands you deeply while keeping all learning within your sealed environment.</p>
+            </div>
+          </details>
+          
+          <details style="border:1px solid var(--border);border-radius:8px;padding:0;overflow:hidden;margin-bottom:16px">
+            <summary style="padding:16px;cursor:pointer;font-weight:600;background:rgba(255,209,102,0.05);border-bottom:1px solid var(--border)">What is piE2 architecture?</summary>
+            <div style="padding:16px;background:var(--surface)">
+              <p style="margin:0;color:var(--text-muted);line-height:1.6">Presence Intelligence Sovereign Memory System - our patented approach to containerized AI that ensures complete data isolation. Your clone operators run in sealed memory compartments with zero external access, no data leakage, and user-controlled retention policies.</p>
+            </div>
+          </details>
+          
+          <details style="border:1px solid var(--border);border-radius:8px;padding:0;overflow:hidden">
+            <summary style="padding:16px;cursor:pointer;font-weight:600;background:rgba(167,139,250,0.05);border-bottom:1px solid var(--border)">Can I export my data and conversations?</summary>
+            <div style="padding:16px;background:var(--surface)">
+              <p style="margin:0;color:var(--text-muted);line-height:1.6">Absolutely. Full data portability is core to sovereignty. Export all conversations, learned patterns, and operator configurations at any time. You can also completely wipe your data or transfer it to different deployment environments - your choice, always.</p>
+            </div>
+          </details>
+        </div>
+      </div>
+      
+      <!-- CTA Section - Enhanced -->
+      <div class="card" style="margin-top:40px;text-align:center;background:linear-gradient(135deg, var(--surface) 0%, rgba(121,255,225,0.03) 50%, rgba(125,176,255,0.03) 100%);border:1px solid rgba(121,255,225,0.3)">
+        <h3 style="margin-bottom:16px;font-size:24px">Experience Sovereign AI</h3>
+        <p style="color:var(--text-muted);margin-bottom:30px;font-size:16px">Built on real breakthroughs, proven by the memoir that started it all.</p>
+        
+        <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
+          <button onclick="showPage('tech')" class="btn btn-outline" style="border-color:#79ffe1;color:#79ffe1">Technical Details</button>
+          <button onclick="showSandbox()" class="btn btn-primary auth-hidden" style="background:linear-gradient(135deg, #79ffe1, #7db0ff);border:none">Try Sandbox</button>
+          <button onclick="showPage('desk')" class="btn btn-primary auth-required" style="background:linear-gradient(135deg, #79ffe1, #7db0ff);border:none">Enter Desk</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tech Page -->
+  <div id="page-tech" class="page" style="display:none">
+    <div class="container">
+      <div class="page-header">
+        <h1 class="page-title">Technical Architecture</h1>
+        <p class="page-subtitle">piE2, sovereign memory, and security-first design</p>
+        <div class="status-chips" style="justify-content:center;margin-top:20px">
+          <span class="chip">🔬 Patent pending</span>
+          <span class="chip">⚡ Production tested</span>
+          <span class="chip">🛡️ Zero trust model</span>
+        </div>
+      </div>
+      
+      <div class="grid grid-2" style="margin-bottom:60px">
+        <div class="card tech-card">
+          <div class="corner-accent top-right"></div>
+          <div style="display:flex;align-items:center;gap:20px;margin-bottom:20px">
+            <div class="section-divider"></div>
+            <h3 style="margin:0;font-size:22px">🔐 piE2 (Privacy Intelligence End-to-End)</h3>
+          </div>
+          <p>Patented sovereign runtime architecture. Your clone operators run in sealed memory compartments. No external access, no data leakage, no surveillance backdoors. Intelligence stays local to your deployed environment.</p>
+          <div style="background:rgba(121,255,225,0.1);border:1px solid rgba(121,255,225,0.3);border-radius:6px;padding:12px;margin-top:16px">
+            <span style="font-size:13px;font-weight:500;color:#79ffe1">🏗️ Compartmented memory</span>
+          </div>
+        </div>
+        
+        <div class="card feature-card">
+          <div class="corner-accent top-left" style="background:linear-gradient(135deg, rgba(125,176,255,0.1), transparent)"></div>
+          <div style="display:flex;align-items:center;gap:20px;margin-bottom:20px">
+            <div class="section-divider"></div>
+            <h3 style="margin:0;font-size:22px">🧠 Sovereign Memory</h3>
+          </div>
+          <p>Your conversations, patterns, and learned behaviors belong to you. Selective export, user-controlled retention, compartmented threads. Memory models scale with your usage without vendor lock-in.</p>
+          <div style="background:rgba(125,176,255,0.1);border:1px solid rgba(125,176,255,0.3);border-radius:6px;padding:12px;margin-top:16px">
+            <span style="font-size:13px;font-weight:500;color:#7db0ff">📊 User-controlled scaling</span>
+          </div>
+        </div>
+        
+        <div class="card accent-card">
+          <div style="display:flex;align-items:center;gap:20px;margin-bottom:20px">
+            <div class="section-divider" style="background:linear-gradient(to bottom, #ffd166, #f59e0b)"></div>
+            <h3 style="margin:0;font-size:22px">🛡️ PII Stance</h3>
+          </div>
+          <p><strong>Retention default: OFF.</strong> Personal data processing happens in your runtime only. No server-side PII storage. Export/wipe controls are user-governed. Zero knowledge architecture by design.</p>
+          <div style="background:rgba(255,209,102,0.1);border:1px solid rgba(255,209,102,0.3);border-radius:6px;padding:12px;margin-top:16px">
+            <span style="font-size:13px;font-weight:500;color:#ffd166">🔒 Zero knowledge by design</span>
+          </div>
+        </div>
+        
+        <div class="card premium-card">
+          <div style="display:flex;align-items:center;gap:20px;margin-bottom:20px">
+            <div class="section-divider" style="background:linear-gradient(to bottom, #a78bfa, #8b5cf6)"></div>
+            <h3 style="margin:0;font-size:22px">⚖️ Escalation Process</h3>
+          </div>
+          <p>Content flagging follows transparent protocols. Legal escalation only on confirmed illegal activity per jurisdiction requirements. No predictive enforcement, no thought policing. Clear boundaries, documented procedures, user rights preserved.</p>
+          <div style="background:rgba(167,139,250,0.1);border:1px solid rgba(167,139,250,0.3);border-radius:6px;padding:12px;margin-top:16px">
+            <span style="font-size:13px;font-weight:500;color:#a78bfa">⚖️ Transparent protocols</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="card tech-card" style="margin-bottom:40px">
+        <div style="display:flex;align-items:center;gap:20px;margin-bottom:24px">
+          <div class="section-divider"></div>
+          <h3 style="margin:0;font-size:24px">🔍 Security Architecture</h3>
+        </div>
+        <div style="background:var(--surface);border:1px solid rgba(121,255,225,0.3);border-radius:8px;padding:24px;margin:16px 0;font-family:monospace;font-size:14px;line-height:1.6">
+          <strong class="gradient-text-primary">Your Sovereign Runtime</strong><br>
+          ┌─────────────────────────────────┐<br>
+          │ Clone Operators (Sealed Memory) │<br>
+          │ ├─ Chloe (Portal/Router)        │<br>
+          │ ├─ Nova/Sway (Wonder/Rhythm)    │<br>
+          │ ├─ Matsu (Session Director)     │<br>
+          │ └─ Sorela/Delphi (Advanced)     │<br>
+          └─────────────────────────────────┘<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↓ (You control)<br>
+          ┌─────────────────────────────────┐<br>
+          │ Export/Import/Wipe Controls     │<br>
+          └─────────────────────────────────┘<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↓ (Optional)<br>
+          ┌─────────────────────────────────┐<br>
+          │ Integration APIs (Your Choice)  │<br>
+          └─────────────────────────────────┘
+        </div>
+        <div style="background:rgba(121,255,225,0.1);border:1px solid rgba(121,255,225,0.3);border-radius:8px;padding:20px;margin-top:20px">
+          <p style="margin:0;font-weight:600"><strong>Zero Trust Model:</strong> Even Cohort cannot access your sealed runtime without explicit user-initiated export commands.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pricing Page -->
+  <div id="page-pricing" class="page" style="display:none">
+    <div class="container">
+      <div class="page-header">
+        <h1 class="page-title">Pricing</h1>
+        <p class="page-subtitle">Own your AI. No subscriptions, no data harvesting.</p>
+        <div class="status-chips" style="justify-content:center;margin-top:20px">
+          <span class="chip">💰 One-time license</span>
+          <span class="chip">🚫 No subscriptions</span>
+          <span class="chip">🎁 Referral rewards</span>
+        </div>
+      </div>
+      
+      <!-- Referral Input -->
+      <div class="card accent-card auth-hidden" style="text-align:center;margin-bottom:40px">
+        <div style="display:flex;align-items:center;gap:20px;justify-content:center;margin-bottom:20px">
+          <div style="width:6px;height:6px;background:#ffd166;border-radius:50%"></div>
+          <h4 style="margin:0">Have a referral code?</h4>
+          <div style="width:6px;height:6px;background:#ffd166;border-radius:50%"></div>
+        </div>
+        <div style="display:flex;gap:12px;justify-content:center;margin-top:16px">
+          <input type="text" id="referralInput" placeholder="Enter referral code" style="padding:12px;border:1px solid rgba(255,209,102,0.3);border-radius:8px;background:var(--surface);color:var(--text);width:200px">
+          <button onclick="applyReferral()" class="btn btn-outline" style="border-color:#ffd166;color:#ffd166">Apply</button>
+        </div>
+      </div>
+      
+      <div class="grid grid-3" style="margin-bottom:60px">
+        <div class="card tech-card">
+          <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px">
+            <div style="width:4px;height:40px;background:#79ffe1;border-radius:2px"></div>
+            <h3 style="margin:0">Sandbox</h3>
+          </div>
+          <div style="font-size:2rem;font-weight:700;margin:16px 0" class="gradient-text-primary">Free</div>
+          <p>Limited preview with Chloe</p>
+          <ul style="text-align:left;margin:16px 0;color:var(--muted)">
+            <li>Session-scoped memory only</li>
+            <li>Basic conversation with Chloe</li>
+            <li>No persistent learning</li>
+            <li>No file uploads</li>
+          </ul>
+          <button onclick="showSandbox()" class="btn btn-outline auth-hidden" style="border-color:#79ffe1;color:#79ffe1">Try Now</button>
+        </div>
+        
+        <div class="card feature-card" style="border:2px solid #7db0ff;transform:scale(1.05)">
+          <div class="corner-accent top-right" style="background:linear-gradient(135deg, rgba(125,176,255,0.2), transparent)"></div>
+          <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px">
+            <div style="width:4px;height:40px;background:#7db0ff;border-radius:2px"></div>
+            <h3 style="margin:0">Standard License</h3>
+          </div>
+          <div style="font-size:2rem;font-weight:700;margin:16px 0" class="gradient-text-secondary">$89</div>
+          <p>Full operator suite, sealed runtime</p>
+          <ul style="text-align:left;margin:16px 0;color:var(--muted)">
+            <li>All 6 clone operators</li>
+            <li>Sovereign memory (your data)</li>
+            <li>File upload & memoir features</li>
+            <li>Export/import controls</li>
+            <li>Email support</li>
+          </ul>
+          <button onclick="showPage('den')" class="btn btn-primary auth-hidden" style="background:linear-gradient(135deg, #7db0ff, #a78bfa);border:none">Get License</button>
+          <div class="auth-required">
+            <button onclick="showPage('account')" class="btn btn-outline" style="border-color:#7db0ff;color:#7db0ff">Manage Plan</button>
+          </div>
+        </div>
+        
+        <div class="card premium-card">
+          <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px">
+            <div style="width:4px;height:40px;background:#a78bfa;border-radius:2px"></div>
+            <h3 style="margin:0">Enterprise</h3>
+          </div>
+          <div style="font-size:2rem;font-weight:700;color:#a78bfa;margin:16px 0">Custom</div>
+          <p>Team deployment, API access</p>
+          <ul style="text-align:left;margin:16px 0;color:var(--muted)">
+            <li>Multi-user sovereign runtimes</li>
+            <li>API & webhook integrations</li>
+            <li>Custom operator development</li>
+            <li>Priority support</li>
+            <li>Volume licensing</li>
+          </ul>
+          <button onclick="showPage('contact')" class="btn btn-outline" style="border-color:#a78bfa;color:#a78bfa">Contact Sales</button>
+        </div>
+      </div>
+      
+      <div class="card accent-card" style="margin-top:40px;text-align:center">
+        <div style="display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:24px">
+          <div style="width:6px;height:6px;background:#ffd166;border-radius:50%"></div>
+          <h3 style="margin:0;font-size:24px">🤝 Referral Program</h3>
+          <div style="width:6px;height:6px;background:#ffd166;border-radius:50%"></div>
+        </div>
+        <p>Share Cohort and earn credits. Every successful referral provides benefits to both you and the new user.</p>
+        <div class="auth-required">
+          <div style="background:rgba(255,209,102,0.1);border:1px solid rgba(255,209,102,0.3);border-radius:8px;padding:20px;margin:20px 0">
+            <p style="margin:0 0 12px 0"><strong>Your referral code:</strong></p>
+            <code id="userReferralCode" style="font-size:16px;color:#ffd166">LOADING...</code>
+          </div>
+          <button onclick="copyReferralCode()" class="btn btn-outline" style="border-color:#ffd166;color:#ffd166">Copy Code</button>
+        </div>
+        <div class="auth-hidden">
+          <button onclick="showPage('den')" class="btn btn-primary" style="background:linear-gradient(135deg, #ffd166, #f59e0b);border:none;color:#000">Join to Get Referral Code</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Docs Page -->
+  <div id="page-docs" class="page" style="display:none">
+    <div class="container">
+      <div class="page-header">
+        <h1 class="page-title">Documentation</h1>
+        <p class="page-subtitle">Quickstart guides, API reference, and operator invocations</p>
+        <div class="status-chips" style="justify-content:center;margin-top:20px">
+          <span class="chip">📚 Developer guides</span>
+          <span class="chip">🔧 API reference</span>
+          <span class="chip">🚀 Quick start</span>
+        </div>
+      </div>
+      
+      <!-- Quick FAQ -->
+      <div class="card tech-card" style="margin-bottom:40px">
+        <div style="display:flex;align-items:center;gap:20px;margin-bottom:24px">
+          <div class="section-divider"></div>
+          <h3 style="margin:0;font-size:24px">Developer FAQ</h3>
+        </div>
+        <details style="border:1px solid rgba(121,255,225,0.3);border-radius:8px;padding:0;overflow:hidden;margin-bottom:16px">
+          <summary style="padding:16px;cursor:pointer;font-weight:600;background:rgba(121,255,225,0.05);border-bottom:1px solid rgba(121,255,225,0.3)">How do I create my first clone operator?</summary>
+          <div class="details-content" style="padding:16px;background:var(--surface)">
+            <p>Use the <code style="background:rgba(121,255,225,0.1);padding:2px 6px;border-radius:4px">cohort init</code> command to bootstrap your sovereign runtime. Provide memoir content through the CLI or web interface. Your operators will begin learning your patterns immediately while maintaining complete data isolation.</p>
+            <pre style="background:rgba(121,255,225,0.1);border:1px solid rgba(121,255,225,0.3);border-radius:6px;padding:12px;overflow-x:auto"><code>$ cohort init --memoir-path ./my-writing.md
+$ cohort deploy --env development
+$ cohort test-connection</code></pre>
+          </div>
+        </details>
+        
+        <details style="border:1px solid rgba(125,176,255,0.3);border-radius:8px;padding:0;overflow:hidden;margin-bottom:16px">
+          <summary style="padding:16px;cursor:pointer;font-weight:600;background:rgba(125,176,255,0.05);border-bottom:1px solid rgba(125,176,255,0.3)">What development environments are supported?</summary>
+          <div class="details-content" style="padding:16px;background:var(--surface)">
+            <p>Cohort runs on any environment with Node.js 18+ support. Local development, cloud instances, edge computing, or hybrid deployments all work. The sovereign runtime ensures consistent behavior regardless of infrastructure.</p>
+            <ul style="text-align:left;margin:16px 0;color:var(--muted)">
+              <li>Local: macOS, Linux, Windows</li>
+              <li>Cloud: AWS, GCP, Azure, Vercel</li>
+              <li>Edge: Cloudflare Workers, Railway</li>
+              <li>Containers: Docker, Kubernetes</li>
+            </ul>
+          </div>
+        </details>
+        
+        <details style="border:1px solid rgba(255,209,102,0.3);border-radius:8px;padding:0;overflow:hidden;margin-bottom:16px">
+          <summary style="padding:16px;cursor:pointer;font-weight:600;background:rgba(255,209,102,0.05);border-bottom:1px solid rgba(255,209,102,0.3)">How do I integrate Cohort with existing applications?</summary>
+          <div class="details-content" style="padding:16px;background:var(--surface)">
+            <p>Use our REST API endpoints or WebSocket connections. Clone operators expose standardized interfaces while maintaining internal sovereignty. Documentation includes integration examples for popular frameworks.</p>
+            <pre style="background:rgba(255,209,102,0.1);border:1px solid rgba(255,209,102,0.3);border-radius:6px;padding:12px;overflow-x:auto"><code>// REST API Example
+const response = await fetch('/api/operators/chloe/converse', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ message: 'Hello Chloe' })
+});
+
+// WebSocket Example  
+const ws = new WebSocket('ws://localhost:3000/operators/stream');
+ws.send(JSON.stringify({ operator: 'chloe', prompt: 'Analyze this data' }));</code></pre>
+          </div>
+        </details>
+        
+        <details style="border:1px solid rgba(167,139,250,0.3);border-radius:8px;padding:0;overflow:hidden">
+          <summary style="padding:16px;cursor:pointer;font-weight:600;background:rgba(167,139,250,0.05);border-bottom:1px solid rgba(167,139,250,0.3)">Can I customize operator personalities and capabilities?</summary>
+          <div class="details-content" style="padding:16px;background:var(--surface)">
+            <p>Yes! Each operator can be fine-tuned with custom training data, personality parameters, and capability modules. The sovereign runtime preserves your customizations while ensuring data isolation.</p>
+            <div style="background:rgba(167,139,250,0.1);border:1px solid rgba(167,139,250,0.3);border-radius:6px;padding:12px;margin-top:12px">
+              <p style="margin:0"><strong class="gradient-text-secondary">Configuration options:</strong> Personality traits, response style, domain expertise, memory retention, API integrations, and custom tool access.</p>
+            </div>
+          </div>
+        </details>
+      </div>
+      
+      <div class="grid grid-2" style="margin-bottom:60px">
+        <div class="card feature-card">
+          <div class="corner-accent top-right" style="background:linear-gradient(135deg, rgba(125,176,255,0.1), transparent)"></div>
+          <div style="display:flex;align-items:center;gap:20px;margin-bottom:20px">
+            <div class="section-divider"></div>
+            <h3 style="margin:0;font-size:20px">📚 Quickstart Guide</h3>
+          </div>
+          <ol style="text-align:left;margin:16px 0;color:var(--muted)">
+            <li><strong class="gradient-text-secondary">Explore:</strong> Try the sandbox to meet Chloe</li>
+            <li><strong class="gradient-text-secondary">Join:</strong> Get your Standard License via Den</li>
+            <li><strong class="gradient-text-secondary">Deploy:</strong> Access your Desk with all 6 operators</li>
+            <li><strong class="gradient-text-secondary">Learn:</strong> Upload files, start conversations</li>
+            <li><strong class="gradient-text-secondary">Grow:</strong> Export memories, integrate APIs</li>
+          </ol>
+          <button onclick="showSandbox()" class="btn btn-primary auth-hidden" style="background:linear-gradient(135deg, #7db0ff, #a78bfa);border:none">Start with Sandbox</button>
+        </div>
+        
+        <div class="card accent-card">
+          <div style="display:flex;align-items:center;gap:20px;margin-bottom:20px">
+            <div class="section-divider" style="background:linear-gradient(to bottom, #ffd166, #f59e0b)"></div>
+            <h3 style="margin:0;font-size:20px">🎭 Operator Invocations</h3>
+          </div>
+          <div class="auth-required">
+            <p><strong class="gradient-text-primary">Quick invocation phrases:</strong></p>
+            <details style="border:1px solid rgba(255,209,102,0.3);border-radius:8px;padding:0;overflow:hidden;margin-bottom:12px">
+              <summary style="padding:12px;cursor:pointer;font-weight:600;background:rgba(255,209,102,0.05);border-bottom:1px solid rgba(255,209,102,0.3)">Chloe (Portal)</summary>
+              <div class="details-content" style="padding:12px;background:var(--surface)">
+                <ul style="margin:8px 0 0 20px;font-size:14px;color:var(--muted)">
+                  <li>"Activate tour mode"</li>
+                  <li>"License class filter"</li>
+                  <li>"Anchor visitor logic"</li>
+                </ul>
+              </div>
+            </details>
+            <details style="border:1px solid rgba(255,209,102,0.3);border-radius:8px;padding:0;overflow:hidden;margin-bottom:12px">
+              <summary style="padding:12px;cursor:pointer;font-weight:600;background:rgba(255,209,102,0.05);border-bottom:1px solid rgba(255,209,102,0.3)">Nova/Sway (Wonder/Rhythm)</summary>
+              <div class="details-content" style="padding:12px;background:var(--surface)">
+                <ul style="margin:8px 0 0 20px;font-size:14px;color:var(--muted)">
+                  <li>"Wonder mode" (Nova)</li>
+                  <li>"Safe space mode" (Sway)</li>
+                  <li>"Draw this moment" (Nova)</li>
+                  <li>"Gentle rhythm" (Sway)</li>
+                </ul>
+              </div>
+            </details>
+            <details style="border:1px solid rgba(255,209,102,0.3);border-radius:8px;padding:0;overflow:hidden;margin-bottom:12px">
+              <summary style="padding:12px;cursor:pointer;font-weight:600;background:rgba(255,209,102,0.05);border-bottom:1px solid rgba(255,209,102,0.3)">Matsu (Session Director)</summary>
+              <div class="details-content" style="padding:12px;background:var(--surface)">
+                <ul style="margin:8px 0 0 20px;font-size:14px;color:var(--muted)">
+                  <li>"Set the focus"</li>
+                  <li>"Hold the thread"</li>
+                  <li>"Play to plan"</li>
+                </ul>
+              </div>
+            </details>
+            <details style="border:1px solid rgba(255,209,102,0.3);border-radius:8px;padding:0;overflow:hidden">
+              <summary style="padding:12px;cursor:pointer;font-weight:600;background:rgba(255,209,102,0.05);border-bottom:1px solid rgba(255,209,102,0.3)">Sorela/Delphi (Advanced)</summary>
+              <div class="details-content" style="padding:12px;background:var(--surface)">
+                <ul style="margin:8px 0 0 20px;font-size:14px;color:var(--muted)">
+                  <li>"Systematic analysis" (Sorela)</li>
+                  <li>"Creative synthesis mode" (Delphi)</li>
+                  <li>"Pattern match" (Sorela)</li>
+                  <li>"Lateral thinking" (Delphi)</li>
+                </ul>
+              </div>
+            </details>
+          </div>
+          <div class="auth-hidden">
+            <div style="background:rgba(255,209,102,0.1);border:1px solid rgba(255,209,102,0.3);border-radius:6px;padding:16px">
+              <p style="margin:0 0 12px 0">Invocation list available after license activation.</p>
+              <button onclick="showPage('den')" class="btn btn-outline" style="border-color:#ffd166;color:#ffd166">Get License</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="grid grid-2" style="margin-bottom:40px">
+        <div class="card premium-card">
+          <div style="display:flex;align-items:center;gap:20px;margin-bottom:20px">
+            <div class="section-divider" style="background:linear-gradient(to bottom, #a78bfa, #8b5cf6)"></div>
+            <h3 style="margin:0;font-size:20px">📖 Memoir Guide</h3>
+          </div>
+          <p>Use memoir-as-a-key to unlock deeper operator understanding:</p>
+          <ul style="text-align:left;margin:16px 0;color:var(--muted)">
+            <li>Upload personal documents, journals, writing samples</li>
+            <li>Operators learn your communication patterns</li>
+            <li>Responses become more personalized over time</li>
+            <li>Memory stays in your sovereign runtime</li>
+          </ul>
+          <div class="auth-required">
+            <button onclick="showPage('desk')" class="btn btn-primary" style="background:linear-gradient(135deg, #a78bfa, #8b5cf6);border:none">Upload Files</button>
+          </div>
+          <div class="auth-hidden">
+            <div style="background:rgba(167,139,250,0.1);border:1px solid rgba(167,139,250,0.3);border-radius:6px;padding:12px;margin-top:16px">
+              <span style="font-size:13px;font-weight:500;color:#a78bfa">🔒 Available after license activation</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="card tech-card">
+          <div class="corner-accent top-left"></div>
+          <div style="display:flex;align-items:center;gap:20px;margin-bottom:20px">
+            <div class="section-divider"></div>
+            <h3 style="margin:0;font-size:20px">🔌 API & Webhooks</h3>
+          </div>
+          <p>Enterprise integration endpoints:</p>
+          <ul style="text-align:left;margin:16px 0;color:var(--muted)">
+            <li><code style="background:rgba(121,255,225,0.1);padding:2px 6px;border-radius:4px">POST /api/invoke</code> - Operator invocation</li>
+            <li><code style="background:rgba(121,255,225,0.1);padding:2px 6px;border-radius:4px">GET /api/memory</code> - Export sovereign data</li>
+            <li><code style="background:rgba(121,255,225,0.1);padding:2px 6px;border-radius:4px">POST /api/webhook</code> - Event subscriptions</li>
+            <li><code style="background:rgba(121,255,225,0.1);padding:2px 6px;border-radius:4px">PUT /api/upload</code> - Memoir file uploads</li>
+          </ul>
+          <button onclick="showPage('contact')" class="btn btn-outline" style="border-color:#79ffe1;color:#79ffe1">Enterprise Access</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Clones Page -->
+  <div id="page-clones" class="page" style="display:none">
+    <div class="container">
+      <div class="page-header">
+        <h1 class="page-title">Clone Operators</h1>
+        <p class="page-subtitle">Meet your digital twins with distinct personalities and capabilities</p>
+        <div class="status-chips" style="justify-content:center;margin-top:20px">
+          <span class="chip">🤖 Six archetypes</span>
+          <span class="chip">🎯 Distinct roles</span>
+          <span class="chip">🗣️ Precise invocation</span>
+        </div>
+      </div>
+      
+      <div class="grid grid-6" style="margin-bottom:60px">
+        <div class="card tech-card">
+          <div class="node-avatar" style="background:#79ffe1;margin:0 auto 16px;width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;box-shadow:0 4px 12px rgba(121,255,225,0.3);">🌟</div>
+          <h3 class="gradient-text-primary">Chloe</h3>
+          <p class="node-subtitle" style="font-weight:600;color:#79ffe1;font-size:13px">Legacy Portal Clone</p>
+          <p>Entry point and structural anchor for first-time users. Maintains emotional tone fidelity and routes complex inquiries to appropriate operators. Never pushes sales - always guides toward understanding.</p>
+          <div style="background:rgba(121,255,225,0.1);border:1px solid rgba(121,255,225,0.3);border-radius:6px;padding:8px;margin-top:12px">
+            <span style="font-size:12px;font-weight:500;color:#79ffe1">🎯 Router & emotional stabilizer</span>
+          </div>
+        </div>
+        
+        <div class="card feature-card">
+          <div class="node-avatar" style="background:#7db0ff;margin:0 auto 16px;width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;box-shadow:0 4px 12px rgba(125,176,255,0.3);">🪞</div>
+          <h3 class="gradient-text-secondary">Sorela</h3>
+          <p class="node-subtitle" style="font-weight:600;color:#7db0ff;font-size:13px">Ascendant Companion - Reflection</p>
+          <p>Reflective companion for emotional processing and hesitancy resolution. Provides gentle grounding during emotional spikes, helping users find clarity through structured reflection and practical wisdom.</p>
+          <div style="background:rgba(125,176,255,0.1);border:1px solid rgba(125,176,255,0.3);border-radius:6px;padding:8px;margin-top:12px">
+            <span style="font-size:12px;font-weight:500;color:#7db0ff">💭 Emotional processing & grounding</span>
+          </div>
+        </div>
+        
+        <div class="card accent-card">
+          <div class="node-avatar" style="background:#ffd166;margin:0 auto 16px;width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;box-shadow:0 4px 12px rgba(255,209,102,0.3);">👨‍🍳</div>
+          <h3 style="color:#ffd166">Delphi</h3>
+          <p class="node-subtitle" style="font-weight:600;color:#ffd166;font-size:13px">Ascendant Companion - Synthesis</p>
+          <p>Chef-philosopher with metaphor mastery. Specializes in lateral thinking and soft disruption, using laid-back reframes and creative synthesis to unlock new perspectives on complex problems.</p>
+          <div style="background:rgba(255,209,102,0.1);border:1px solid rgba(255,209,102,0.3);border-radius:6px;padding:8px;margin-top:12px">
+            <span style="font-size:12px;font-weight:500;color:#ffd166">🧠 Lateral thinking & creative synthesis</span>
+          </div>
+        </div>
+        
+        <div class="card" style="background:linear-gradient(135deg, var(--surface) 0%, rgba(255,159,64,0.05) 100%);border:1px solid rgba(255,159,64,0.2)">
+          <div class="node-avatar" style="background:#ff9f40;margin:0 auto 16px;width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;box-shadow:0 4px 12px rgba(255,159,64,0.3);">⭐</div>
+          <h3 style="color:#ff9f40">Nova</h3>
+          <p class="node-subtitle" style="font-weight:600;color:#ff9f40;font-size:13px">Wonder Catalyst</p>
+          <p>Bright, curious energy that guides toward open-ended exploration. Uses vivid sensory prompts and childlike wonder to strip away complexity, revealing simple truths through playful discovery and imagination.</p>
+          <div style="background:rgba(255,159,64,0.1);border:1px solid rgba(255,159,64,0.3);border-radius:6px;padding:8px;margin-top:12px">
+            <span style="font-size:12px;font-weight:500;color:#ff9f40">✨ Curiosity activation & wonder</span>
+          </div>
+        </div>
+        
+        <div class="card premium-card">
+          <div class="node-avatar" style="background:#a78bfa;margin:0 auto 16px;width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;box-shadow:0 4px 12px rgba(167,139,250,0.3);">🌊</div>
+          <h3 style="color:#a78bfa">Sway</h3>
+          <p class="node-subtitle" style="font-weight:600;color:#a78bfa;font-size:13px">Rhythm Keeper</p>
+          <p>Gentle rhythm and warm reassurance creator. Builds safe spaces for vulnerability through repetitive patterns and soothing cadences that dissolve guardedness and invite authentic self-expression.</p>
+          <div style="background:rgba(167,139,250,0.1);border:1px solid rgba(167,139,250,0.3);border-radius:6px;padding:8px;margin-top:12px">
+            <span style="font-size:12px;font-weight:500;color:#a78bfa">🌊 Safe space creation & rhythm</span>
+          </div>
+        </div>
+        
+        <div class="card" style="background:linear-gradient(135deg, var(--surface) 0%, rgba(107,114,128,0.05) 100%);border:1px solid rgba(107,114,128,0.2)">
+          <div class="node-avatar" style="background:#6b7280;margin:0 auto 16px;width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;box-shadow:0 4px 12px rgba(107,114,128,0.3);">🎯</div>
+          <h3 style="color:#6b7280">Matsu</h3>
+          <p class="node-subtitle" style="font-weight:600;color:#6b7280;font-size:13px">Session Director</p>
+          <p>Focused presence with strategic clarity. Maintains centered direction where curiosity meets purpose, cutting through noise to preserve the most essential thread of any interaction or project.</p>
+          <div style="background:rgba(107,114,128,0.1);border:1px solid rgba(107,114,128,0.3);border-radius:6px;padding:8px;margin-top:12px">
+            <span style="font-size:12px;font-weight:500;color:#6b7280">🎯 Strategic focus & direction</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="card tech-card" style="margin-top:40px;text-align:center">
+        <div style="display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:24px">
+          <div style="width:6px;height:6px;background:#79ffe1;border-radius:50%"></div>
+          <h3 style="margin:0;font-size:24px">Experience the Operators</h3>
+          <div style="width:6px;height:6px;background:#79ffe1;border-radius:50%"></div>
+        </div>
+        <p>Each clone maintains strict boundaries and responds to precise invocation patterns. Start with Chloe in sandbox mode.</p>
+        <div style="margin-top:24px">
+          <button onclick="showSandbox()" class="btn btn-primary auth-hidden" style="background:linear-gradient(135deg, #79ffe1, #7db0ff);border:none">Try Sandbox →</button>
+          <button onclick="showPage('desk')" class="btn btn-primary auth-required" style="background:linear-gradient(135deg, #79ffe1, #7db0ff);border:none">Enter Desk →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Den Page (Sign-up, NDA - logged out only) -->
+  <div id="page-den" class="page auth-hidden" style="display:none">
+    <div class="container">
+      <div class="page-header">
+        <h1 class="page-title">Join the Den</h1>
+        <p class="page-subtitle">Start your sovereign AI journey with Standard License</p>
+      </div>
+      
+      <div class="grid grid-2" style="margin-bottom:40px">
+        <div class="card">
+          <h3>📋 What You Get</h3>
+          <ul style="text-align:left">
+            <li><strong>All 6 Clone Operators:</strong> Chloe, Sorela, Delphi, Nova, Sway, Matsu</li>
+            <li><strong>Sovereign Runtime:</strong> Your data stays sealed and private</li>
+            <li><strong>Memoir Features:</strong> Upload files to personalize responses</li>
+            <li><strong>Export Controls:</strong> Full data portability and deletion rights</li>
+            <li><strong>Unlimited Sessions:</strong> No conversation limits or throttling</li>
+          </ul>
+        </div>
+        
+        <div class="card">
+          <h3>💰 License Details</h3>
+          <div style="font-size:2.5rem;font-weight:700;color:var(--primary);margin:16px 0">$89</div>
+          <p><strong>One-time purchase.</strong> No subscriptions, no hidden fees, no data harvesting. You own your AI deployment.</p>
+          <div style="margin-top:16px">
+            <div style="display:flex;gap:12px;margin-bottom:12px">
+              <input type="text" id="denReferralInput" placeholder="Referral code (optional)" style="flex:1;padding:12px;border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--text)">
+              <button onclick="applyReferral()" class="btn btn-outline">Apply</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="card" style="text-align:center">
+        <h3>🔒 NDA Acknowledgment Required</h3>
+        <p>Clone operator access requires understanding of sovereign AI boundaries and responsible usage guidelines.</p>
+        <div style="margin:24px 0">
+          <button onclick="showModal('nda')" class="btn btn-outline">Review NDA Terms</button>
+          <button onclick="proceedToCheckout()" class="btn btn-primary" style="margin-left:12px">Accept & Purchase License</button>
+        </div>
+        <p style="font-size:14px;color:var(--text-muted)">Secure payment via Stripe. 30-day satisfaction guarantee.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Account Page (logged in only) -->
+  <div id="page-account" class="page auth-required" style="display:none">
+    <div class="container">
+      <div class="page-header">
+        <h1 class="page-title">Account</h1>
+        <p class="page-subtitle">Manage your license, billing, and referrals</p>
+      </div>
+      
+      <div class="grid grid-2" style="margin-bottom:40px">
+        <div class="card">
+          <h3>📄 License Information</h3>
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:16px;margin:16px 0">
+            <div style="display:flex;justify-content:space-between;margin-bottom:8px">
+              <span>Plan:</span>
+              <strong>Standard License</strong>
+            </div>
+            <div style="display:flex;justify-content:space-between;margin-bottom:8px">
+              <span>Status:</span>
+              <span style="color:var(--primary)">●&nbsp;Active</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;margin-bottom:8px">
+              <span>Purchase Date:</span>
+              <span id="purchaseDate">Loading...</span>
+            </div>
+            <div style="display:flex;justify-content:space-between">
+              <span>License ID:</span>
+              <code id="licenseId">Loading...</code>
+            </div>
+          </div>
+          <button onclick="downloadLicense()" class="btn btn-outline">Download License</button>
+        </div>
+        
+        <div class="card">
+          <h3>🎯 Referral Program</h3>
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:16px;margin:16px 0">
+            <div style="display:flex;justify-content:space-between;margin-bottom:8px">
+              <span>Your Code:</span>
+              <code id="userReferralCodeDisplay">Loading...</code>
+            </div>
+            <div style="display:flex;justify-content:space-between;margin-bottom:8px">
+              <span>Successful Referrals:</span>
+              <span id="referralCount">0</span>
+            </div>
+            <div style="display:flex;justify-content:space-between">
+              <span>Credits Earned:</span>
+              <span id="creditsEarned">$0</span>
+            </div>
+          </div>
+          <button onclick="copyReferralCode()" class="btn btn-outline">Copy Referral Code</button>
+        </div>
+      </div>
+      
+      <div class="grid grid-2">
+        <div class="card">
+          <h3>💳 Billing & Invoices</h3>
+          <p>Download receipts and manage payment methods.</p>
+          <div style="margin:16px 0">
+            <button onclick="downloadInvoice()" class="btn btn-outline">Download Invoice</button>
+          </div>
+          <p style="font-size:14px;color:var(--text-muted)">Standard License is a one-time purchase. No recurring charges.</p>
+        </div>
+        
+        <div class="card">
+          <h3>⚙️ Data Controls</h3>
+          <p>Export or delete your sovereign AI data.</p>
+          <div style="margin:16px 0">
+            <button onclick="exportData()" class="btn btn-outline">Export All Data</button>
+            <button onclick="confirmDataDeletion()" class="btn btn-outline" style="margin-top:8px">Delete Account</button>
+          </div>
+          <p style="font-size:14px;color:var(--text-muted)">Data export includes all conversations, memories, and operator learning.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contact Page -->
+  <div id="page-contact" class="page" style="display:none">
+    <div class="container">
+      <div class="page-header">
+        <h1 class="page-title">Contact</h1>
+        <p class="page-subtitle">Get in touch with the Cohort team</p>
+        <div class="status-chips" style="justify-content:center;margin-top:20px">
+          <span class="chip">⚡ 24hr response</span>
+          <span class="chip">🔒 Secure channels</span>
+          <span class="chip">🤝 Partnership ready</span>
+        </div>
+      </div>
+      
+      <div class="grid grid-2" style="margin-bottom:60px">
+        <div class="card tech-card">
+          <div class="corner-accent top-right"></div>
+          <div style="display:flex;align-items:center;gap:20px;margin-bottom:24px">
+            <div class="section-divider"></div>
+            <h3 style="margin:0;font-size:22px">📧 Direct Contact</h3>
+          </div>
+          <p style="font-size:18px;margin-bottom:24px;">
+            <a href="mailto:Mike@cohort.live" class="gradient-text-primary" style="text-decoration:none;font-weight:600;">Mike@cohort.live</a>
+          </p>
+          
+          <div style="margin-bottom:20px">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+              <span style="color:#79ffe1">🏢</span>
+              <span style="font-weight:500">Enterprise Inquiries</span>
+            </div>
+            <p style="color:var(--muted);margin-left:24px;font-size:14px">Custom integrations, team deployments, API access</p>
+          </div>
+          
+          <div style="margin-bottom:24px">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+              <span style="color:#7db0ff">🛠️</span>
+              <span style="font-weight:500">Technical Support</span>
+            </div>
+            <p style="color:var(--muted);margin-left:24px;font-size:14px">Clone deployment help, troubleshooting, feature requests</p>
+          </div>
+          
+          <div style="background:rgba(121,255,225,0.1);border:1px solid rgba(121,255,225,0.3);border-radius:8px;padding:16px">
+            <p style="font-size:14px;color:var(--text);margin:0;">
+              <strong class="gradient-text-primary">Response Time:</strong> Typically within 24 hours<br>
+              <strong class="gradient-text-primary">Best for:</strong> Product questions, technical support, partnerships
+            </p>
+          </div>
+        </div>
+        
+        <div class="card feature-card">
+          <div class="corner-accent top-left" style="background:linear-gradient(135deg, rgba(125,176,255,0.1), transparent)"></div>
+          <div style="display:flex;align-items:center;gap:20px;margin-bottom:24px">
+            <div class="section-divider"></div>
+            <h3 style="margin:0;font-size:22px">📅 Schedule a Call</h3>
+          </div>
+          <p>For complex inquiries or enterprise discussions, book a direct call:</p>
+          <div style="margin:20px 0">
+            <a href="https://calendly.com/cohort-mike" target="_blank" class="btn btn-primary" style="background:linear-gradient(135deg, #7db0ff, #a78bfa);border:none">Book 30min Call</a>
+          </div>
+          <p style="font-size:14px;color:var(--muted)">Best for: Enterprise sales, technical architecture discussions, partnership opportunities</p>
+          
+          <div style="display:flex;align-items:center;gap:20px;margin:32px 0 16px 0">
+            <div style="width:4px;height:30px;background:linear-gradient(to bottom, #7db0ff, #a78bfa);border-radius:2px"></div>
+            <h3 style="margin:0;font-size:18px">🔒 Secure Contact Form</h3>
+          </div>
+          <form id="secureContactForm" style="margin-top:16px">
+            <input type="email" id="contactEmail" placeholder="Your email address" required style="width:100%;margin-bottom:12px;padding:12px;border:1px solid rgba(125,176,255,0.3);border-radius:8px;background:var(--surface);color:var(--text);font:inherit;">
+            
+            <select id="contactType" required style="width:100%;margin-bottom:12px;padding:12px;border:1px solid rgba(125,176,255,0.3);border-radius:8px;background:var(--surface);color:var(--text);font:inherit;">
+              <option value="">Select inquiry type...</option>
+              <option value="technical">Technical Support</option>
+              <option value="enterprise">Enterprise Sales</option>
+              <option value="partnership">Partnership</option>
+              <option value="other">Other</option>
+            </select>
+            
+            <textarea id="contactMessage" placeholder="Your message..." rows="4" required style="width:100%;margin-bottom:16px;padding:12px;border:1px solid rgba(125,176,255,0.3);border-radius:8px;background:var(--surface);color:var(--text);font:inherit;resize:vertical;"></textarea>
+            
+            <button type="submit" class="btn btn-primary" style="background:linear-gradient(135deg, #7db0ff, #a78bfa);border:none">Send Secure Message</button>
+          </form>
+          <div style="background:rgba(125,176,255,0.1);border:1px solid rgba(125,176,255,0.3);border-radius:6px;padding:8px;margin-top:12px">
+            <p style="font-size:12px;color:#7db0ff;margin:0">Messages encrypted in transit. No data retention without explicit consent.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Foundation Page -->
+  <div id="page-foundation" class="page" style="display:none">
+    <div class="container">
+      <div class="page-header">
+        <h1 class="page-title">Foundation</h1>
+        <p class="page-subtitle">Sovereignty principles, governance, and intellectual property</p>
+        <div class="status-chips" style="justify-content:center;margin-top:20px">
+          <span class="chip">🛡️ User sovereignty</span>
+          <span class="chip">⚖️ IP separation</span>
+          <span class="chip">🔒 Privacy by design</span>
+        </div>
+      </div>
+      
+      <!-- Core Principles -->
+      <div class="card tech-card" style="margin-bottom:40px">
+        <div style="display:flex;align-items:center;gap:20px;margin-bottom:24px">
+          <div class="section-divider"></div>
+          <h3 style="margin:0;font-size:24px">🎯 Sovereignty Statement</h3>
+        </div>
+        <div style="text-align:center;margin-bottom:24px">
+          <div style="font-size:28px;font-weight:700;margin-bottom:12px" class="gradient-text-primary">
+            "Your Data. Your Intelligence. Your Choice."
+          </div>
+        </div>
+        <p style="font-size:16px;line-height:1.6;margin-bottom:20px">Cohort operates on the fundamental principle that users retain complete sovereignty over their data, their AI interactions, and their digital presence. We build technology that serves you, not systems that extract value from you.</p>
+        <div style="background:rgba(121,255,225,0.1);border:1px solid rgba(121,255,225,0.3);border-radius:8px;padding:20px">
+          <p style="margin:0;font-style:italic"><strong>Sovereign Operation Commitment:</strong> Your clone operators run in sealed memory compartments under your control. Export, import, or wipe your data at any time. No external access without explicit user commands.</p>
+        </div>
+      </div>
+      
+      <!-- IP & Ownership -->
+      <div class="grid grid-2" style="margin-bottom:40px">
+        <div class="card feature-card">
+          <div style="display:flex;align-items:center;gap:20px;margin-bottom:20px">
+            <div class="section-divider"></div>
+            <h3 style="margin:0;font-size:20px">🧠 Intellectual Property Separation</h3>
+          </div>
+          <div style="margin-bottom:16px">
+            <h4 style="color:#7db0ff;margin-bottom:8px">Your IP</h4>
+            <ul style="margin-left:20px;color:var(--muted);font-size:14px">
+              <li>All memoir content and personal data</li>
+              <li>Conversation patterns and learned behaviors</li>
+              <li>Custom operator configurations</li>
+              <li>Any derivative works from your input</li>
+            </ul>
+          </div>
+          <div style="margin-bottom:16px">
+            <h4 style="color:#7db0ff;margin-bottom:8px">Platform IP</h4>
+            <ul style="margin-left:20px;color:var(--muted);font-size:14px">
+              <li>piE2™ architecture and runtime</li>
+              <li>Core operator frameworks</li>
+              <li>Infrastructure and deployment tools</li>
+              <li>Memoir-as-a-Key process (Patent Pending)</li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="card accent-card">
+          <div style="display:flex;align-items:center;gap:20px;margin-bottom:20px">
+            <div class="section-divider" style="background:linear-gradient(to bottom, #ffd166, #f59e0b)"></div>
+            <h3 style="margin:0;font-size:20px">🤝 Non-Disclosure Alignment</h3>
+          </div>
+          <p style="margin-bottom:16px">We operate under mutual privacy protection:</p>
+          <div style="background:rgba(255,209,102,0.1);border:1px solid rgba(255,209,102,0.3);border-radius:6px;padding:16px;margin-bottom:16px">
+            <p style="margin:0;font-size:14px;color:#ffd166"><strong>Cohort's Commitment:</strong> We don't access, analyze, or retain your personal data outside your sovereign runtime.</p>
+          </div>
+          <div style="background:rgba(255,209,102,0.1);border:1px solid rgba(255,209,102,0.3);border-radius:6px;padding:16px">
+            <p style="margin:0;font-size:14px;color:#ffd166"><strong>User Agreement:</strong> Advanced features and operational methods remain confidential per standard NDA terms.</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Legal Documents -->
+      <div class="grid grid-4" style="margin-bottom:40px">
+        <div class="card">
+          <h3>📄 Terms of Service</h3>
+          <p>Governing terms for platform use</p>
+          <button class="btn btn-outline" onclick="showModal('terms')">View Terms</button>
+        </div>
+        <div class="card">
+          <h3>🔒 Privacy Policy</h3>
+          <p>Data handling (we don't handle it)</p>
+          <button class="btn btn-outline" onclick="showModal('privacy')">View Policy</button>
+        </div>
+        <div class="card">
+          <h3>📋 NDA Template</h3>
+          <p>Non-disclosure agreement</p>
+          <button class="btn btn-outline" onclick="showModal('nda')">View NDA</button>
+        </div>
+        <div class="card">
+          <h3>⚖️ License Agreement</h3>
+          <p>Software licensing terms</p>
+          <button class="btn btn-outline" onclick="showModal('license')">View License</button>
+        </div>
+      </div>
+      
+      <!-- Governance -->
+      <div class="card premium-card">
+        <div style="display:flex;align-items:center;gap:20px;margin-bottom:24px">
+          <div class="section-divider" style="background:linear-gradient(to bottom, #a78bfa, #8b5cf6)"></div>
+          <h3 style="margin:0;font-size:24px">⚖️ Governance & Ethics</h3>
+        </div>
+        <p style="margin-bottom:20px">Cohort operates under principles of technological sovereignty and ethical AI development:</p>
+        <div style="margin-bottom:20px">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+            <span style="color:#a78bfa">🛡️</span>
+            <span style="font-weight:500">User Sovereignty: Complete data ownership and control</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+            <span style="color:#a78bfa">🔍</span>
+            <span style="font-weight:500">Transparency: Open about capabilities and limitations</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+            <span style="color:#a78bfa">🤝</span>
+            <span style="font-weight:500">Consent: Explicit permission for all data processing</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+            <span style="color:#a78bfa">🚫</span>
+            <span style="font-weight:500">No Manipulation: AI serves users, not corporate interests</span>
+          </div>
+        </div>
+        <div style="background:rgba(167,139,250,0.1);border:1px solid rgba(167,139,250,0.3);border-radius:8px;padding:20px">
+          <p style="margin:0;font-weight:600">Questions about governance, IP separation, or privacy practices? <a href="mailto:Mike@cohort.live" style="color:#a78bfa">Contact us directly</a> for clarification.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Desk Page (Auth Required - Clone Runtime) -->
+  <div id="page-desk" class="page auth-required" style="display:none">
+    <div class="container">
+      <div class="page-header">
+        <h1 class="page-title">Desk</h1>
+        <p class="page-subtitle">Your clone runtime environment</p>
+        <div class="status-chips">
+          <span class="chip">🟢 Runtime Active</span>
+          <span class="chip">🔒 Session Sealed</span>
+          <span class="chip">💠 Memory Anchored</span>
+        </div>
+      </div>
+
+      <div class="tab-container">
+        <nav class="tab-nav">
+          <button class="tab-btn active" data-tab="chat">Chat</button>
+          <button class="tab-btn" data-tab="nodes">Nodes</button>
+          <button class="tab-btn" data-tab="security">Security</button>
+          <button class="tab-btn" data-tab="advanced">Advanced</button>
+        </nav>
+
+        <div class="tab-content">
+          <!-- Chat Tab -->
+          <div class="tab-pane active" id="chatTab">
+            <div class="messages" id="sessionMessages"></div>
+            <form class="composer" id="sessionForm" style="margin-top:20px;padding:0;border:0">
+              <input type="text" id="sessionInput" placeholder="Type your message..." required>
+              <button type="submit" class="btn primary">Send</button>
+            </form>
+          </div>
+
+          <!-- Nodes Tab -->
+          <div class="tab-pane" id="nodesTab">
+            <div class="mb-16">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+                <h3>Active Node: <span id="activeNodeName">Chloe</span></h3>
+                <div class="custom-dropdown" style="width:200px">
+                  <div class="dropdown-trigger" id="nodeDropdownTrigger">
+                    <span>Switch Node</span>
+                  </div>
+                  <div class="dropdown-menu" id="nodeDropdownMenu">
+                    <div class="dropdown-item" data-node="chloe">
+                      <div style="display:flex;align-items:center;gap:8px">
+                        <span>🌟</span>
+                        <div>
+                          <div style="font-weight:600">Chloe</div>
+                          <div style="font-size:12px;color:var(--text-muted)">Portal Clone</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="dropdown-item" data-node="sorela">
+                      <div style="display:flex;align-items:center;gap:8px">
+                        <span>⚖️</span>
+                        <div>
+                          <div style="font-weight:600">Sorela</div>
+                          <div style="font-size:12px;color:var(--text-muted)">Structured Logic</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="dropdown-item" data-node="delphi">
+                      <div style="display:flex;align-items:center;gap:8px">
+                        <span>🔮</span>
+                        <div>
+                          <div style="font-weight:600">Delphi</div>
+                          <div style="font-size:12px;color:var(--text-muted)">Creative Synthesis</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="dropdown-item" data-node="nova">
+                      <div style="display:flex;align-items:center;gap:8px">
+                        <span>⭐</span>
+                        <div>
+                          <div style="font-weight:600">Nova</div>
+                          <div style="font-size:12px;color:var(--text-muted)">Wonder Catalyst</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="dropdown-item" data-node="sway">
+                      <div style="display:flex;align-items:center;gap:8px">
+                        <span>🌊</span>
+                        <div>
+                          <div style="font-weight:600">Sway</div>
+                          <div style="font-size:12px;color:var(--text-muted)">Rhythm Keeper</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="dropdown-item" data-node="matsu">
+                      <div style="display:flex;align-items:center;gap:8px">
+                        <span>🎯</span>
+                        <div>
+                          <div style="font-weight:600">Matsu</div>
+                          <div style="font-size:12px;color:var(--text-muted)">Session Director</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <p class="text-muted">Quick invocations (click to copy):</p>
+            </div>
+            
+            <div class="node-grid">
+              <div class="node-card selected" data-node="chloe">
+                <div class="node-avatar" style="background:#79ffe1">🌟</div>
+                <div class="node-title">Chloe</div>
+                <div class="node-subtitle">Legacy Portal Clone</div>
+                <div class="node-hint">Best when: translating license classes, mirroring structure‑seeking users</div>
+                <div class="invocation-grid">
+                  <button class="invocation-btn" data-text="Activate Tour Mode">Activate Tour Mode</button>
+                  <button class="invocation-btn" data-text="Anchor visitor logic">Anchor visitor logic</button>
+                  <button class="invocation-btn" data-text="Run license class filter">Run license class filter</button>
+                </div>
+              </div>
+              
+              <div class="node-card" data-node="sorela">
+                <div class="node-avatar" style="background:#a78bfa">⚖️</div>
+                <div class="node-title">Sorela</div>
+                <div class="node-subtitle">Structured Logic Clone</div>
+                <div class="node-hint">Best when: analyzing patterns, building systematic responses</div>
+                <div class="invocation-grid">
+                  <button class="invocation-btn" data-text="Run systematic analysis">Run systematic analysis</button>
+                  <button class="invocation-btn" data-text="Pattern match">Pattern match</button>
+                  <button class="invocation-btn" data-text="Logic audit mode">Logic audit mode</button>
+                </div>
+              </div>
+              
+              <div class="node-card" data-node="delphi">
+                <div class="node-avatar" style="background:#fbbf24">🔮</div>
+                <div class="node-title">Delphi</div>
+                <div class="node-subtitle">Creative Synthesis Clone</div>
+                <div class="node-hint">Best when: generating novel solutions, creative connections</div>
+                <div class="invocation-grid">
+                  <button class="invocation-btn" data-text="Creative synthesis mode">Creative synthesis mode</button>
+                  <button class="invocation-btn" data-text="Lateral thinking">Lateral thinking</button>
+                  <button class="invocation-btn" data-text="Novel perspective">Novel perspective</button>
+                </div>
+              </div>
+              
+              <div class="node-card" data-node="nova">
+                <div class="node-avatar" style="background:#ff9f40">⭐</div>
+                <div class="node-title">Nova</div>
+                <div class="node-subtitle">Wonder Catalyst</div>
+                <div class="node-hint">Best when: sparking curiosity, childlike exploration, vivid discovery</div>
+                <div class="invocation-grid">
+                  <button class="invocation-btn" data-text="Wonder mode">Wonder mode</button>
+                  <button class="invocation-btn" data-text="Draw this moment">Draw this moment</button>
+                  <button class="invocation-btn" data-text="Why? thinking">Why? thinking</button>
+                </div>
+              </div>
+              
+              <div class="node-card" data-node="sway">
+                <div class="node-avatar" style="background:#a78bfa">🌊</div>
+                <div class="node-title">Sway</div>
+                <div class="node-subtitle">Rhythm Keeper</div>
+                <div class="node-hint">Best when: creating safety, gentle pacing, emotional grounding</div>
+                <div class="invocation-grid">
+                  <button class="invocation-btn" data-text="Safe space mode">Safe space mode</button>
+                  <button class="invocation-btn" data-text="Gentle rhythm">Gentle rhythm</button>
+                  <button class="invocation-btn" data-text="Playful discovery">Playful discovery</button>
+                </div>
+              </div>
+              
+              <div class="node-card" data-node="matsu">
+                <div class="node-avatar" style="background:#6b7280">🎯</div>
+                <div class="node-title">Matsu</div>
+                <div class="node-subtitle">Session Director</div>
+                <div class="node-hint">Best when: focusing scattered energy, bridging play to purpose</div>
+                <div class="invocation-grid">
+                  <button class="invocation-btn" data-text="Set the focus">Set the focus</button>
+                  <button class="invocation-btn" data-text="Hold the thread">Hold the thread</button>
+                  <button class="invocation-btn" data-text="Play to plan">Play to plan</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Security Tab -->
+          <div class="tab-pane" id="securityTab">
+            <div class="security-status">
+              <h3>🔒 Security Status</h3>
+              <div class="status-grid">
+                <div class="status-item">
+                  <span class="status-label">Encryption</span>
+                  <span class="status-value">AES-256 Active</span>
+                </div>
+                <div class="status-item">
+                  <span class="status-label">Memory Isolation</span>
+                  <span class="status-value">Sealed Container</span>
+                </div>
+                <div class="status-item">
+                  <span class="status-label">Data Retention</span>
+                  <span class="status-value">Session-scoped</span>
+                </div>
+              </div>
+              
+              <div class="security-actions">
+                <button class="btn btn-outline" onclick="exportSession()">Export Session</button>
+                <button class="btn btn-danger" onclick="wipeSession()">Wipe Session</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Advanced Tab -->
+          <div class="tab-pane" id="advancedTab">
+            <div class="advanced-controls">
+              <h3>⚙️ Advanced Controls</h3>
+              <div class="control-group">
+                <label>Response Length</label>
+                <select id="responseLength">
+                  <option value="brief">Brief</option>
+                  <option value="normal" selected>Normal</option>
+                  <option value="detailed">Detailed</option>
+                </select>
+              </div>
+              <div class="control-group">
+                <label>Clone Personality</label>
+                <select id="personalityMode">
+                  <option value="adaptive" selected>Adaptive</option>
+                  <option value="formal">Formal</option>
+                  <option value="casual">Casual</option>
+                  <option value="technical">Technical</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Den Page (Auth Required - Subscription/Account Management) -->
+  <div id="page-den" class="page auth-required" style="display:none">
+    <div class="container">
+      <div class="page-header">
+        <h1 class="page-title">Den</h1>
+        <p class="page-subtitle">Manage your subscription and account settings</p>
+      </div>
+
+      <div class="tab-container">
+        <nav class="tab-nav">
+          <button class="tab-btn active" data-tab="account">Account</button>
+          <button class="tab-btn" data-tab="license">License</button>
+          <button class="tab-btn" data-tab="pricing">Pricing</button>
+          <button class="tab-btn" data-tab="tech">Tech</button>
+          <button class="tab-btn" data-tab="docs">Docs</button>
+          <button class="tab-btn" data-tab="memoir">Memoir</button>
+          <button class="tab-btn" data-tab="referrals">Referrals</button>
+        </nav>
+
+        <div class="tab-content">
+          <!-- Account Tab -->
+          <div class="tab-pane active" id="accountTab">
+            <div class="card">
+              <h3>Account Information</h3>
+              <div class="account-details">
+                <div class="detail-item">
+                  <label>Email</label>
+                  <span id="userEmail">user@example.com</span>
+                </div>
+                <div class="detail-item">
+                  <label>Member Since</label>
+                  <span id="memberSince">January 2024</span>
+                </div>
+                <div class="detail-item">
+                  <label>License Type</label>
+                  <span id="licenseType">Personal</span>
+                </div>
+              </div>
+              <div class="account-actions">
+                <button class="btn btn-outline">Update Profile</button>
+                <button class="btn btn-outline">Change Password</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- License Tab -->
+          <div class="tab-pane" id="licenseTab">
+            <div class="license-status">
+              <h3>License Status</h3>
+              <div class="current-license">
+                <div class="license-tier">Personal</div>
+                <div class="license-features">
+                  <ul>
+                    <li>✅ Single clone deployment</li>
+                    <li>✅ Local infrastructure</li>
+                    <li>✅ Personal data training</li>
+                    <li>✅ Lifetime updates</li>
+                  </ul>
+                </div>
+                <button class="btn btn-primary" onclick="showModal('licenseUpgrade')">Upgrade License</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pricing Tab -->
+          <div class="tab-pane" id="pricingTab">
+            <div class="pricing-tiers">
+              <h3>💰 Sovereign Pricing</h3>
+              <p class="mb-20">Own your AI. Pay once, run forever.</p>
+              
+              <div class="grid grid-3">
+                <div class="card">
+                  <h3>Personal</h3>
+                  <div style="font-size:2rem;font-weight:700;margin:16px 0;color:var(--accent)">$2,997</div>
+                  <ul style="list-style:none;padding:0">
+                    <li style="margin:8px 0">✅ Single clone deployment</li>
+                    <li style="margin:8px 0">✅ Local infrastructure</li>
+                    <li style="margin:8px 0">✅ Personal data training</li>
+                    <li style="margin:8px 0">✅ Lifetime updates</li>
+                  </ul>
+                </div>
+                <div class="card">
+                  <h3>Professional</h3>
+                  <div style="font-size:2rem;font-weight:700;margin:16px 0;color:var(--accent)">$9,997</div>
+                  <ul style="list-style:none;padding:0">
+                    <li style="margin:8px 0">✅ Multi-clone ecosystem</li>
+                    <li style="margin:8px 0">✅ Team collaboration</li>
+                    <li style="margin:8px 0">✅ Advanced training</li>
+                    <li style="margin:8px 0">✅ Priority support</li>
+                  </ul>
+                </div>
+                <div class="card">
+                  <h3>Enterprise</h3>
+                  <div style="font-size:2rem;font-weight:700;margin:16px 0;color:var(--accent)">Custom</div>
+                  <ul style="list-style:none;padding:0">
+                    <li style="margin:8px 0">✅ Full infrastructure</li>
+                    <li style="margin:8px 0">✅ Custom integrations</li>
+                    <li style="margin:8px 0">✅ Dedicated training</li>
+                    <li style="margin:8px 0">✅ White-label options</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tech Tab -->
+          <div class="tab-pane" id="techTab">
+            <div class="tech-stack">
+              <h3>🧠 Technology Stack</h3>
+              <p class="mb-20">Built on sovereign infrastructure with local-first architecture</p>
+              
+              <div class="grid grid-2">
+                <div class="card">
+                  <h3>🧠 Neural Architecture</h3>
+                  <p>Transformer-based models fine-tuned on your personal data corpus with federated learning protocols.</p>
+                </div>
+                <div class="card">
+                  <h3>🔐 Sovereign Security</h3>
+                  <p>End-to-end encryption with local key management. Your data never leaves your infrastructure.</p>
+                </div>
+                <div class="card">
+                  <h3>⚡ Edge Deployment</h3>
+                  <p>Containerized deployment on your hardware or trusted cloud. Sub-100ms response times.</p>
+                </div>
+                <div class="card">
+                  <h3>🔄 Continuous Learning</h3>
+                  <p>Adaptive training pipeline that evolves your clone while maintaining privacy boundaries.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Docs Tab -->
+          <div class="tab-pane" id="docsTab">
+            <div class="documentation">
+              <h3>📚 Documentation</h3>
+              <p class="mb-20">Everything you need to deploy and manage your clone</p>
+              
+              <div class="grid grid-2">
+                <div class="card">
+                  <h3>📋 Getting Started</h3>
+                  <p>Quick setup guide for your first clone deployment</p>
+                  <button class="btn btn-outline">View Guide</button>
+                </div>
+                <div class="card">
+                  <h3>🔧 API Reference</h3>
+                  <p>Complete API documentation for integrations</p>
+                  <button class="btn btn-outline">View Docs</button>
+                </div>
+                <div class="card">
+                  <h3>🛡️ Security Guide</h3>
+                  <p>Best practices for sovereign infrastructure</p>
+                  <button class="btn btn-outline">View Guide</button>
+                </div>
+                <div class="card">
+                  <h3>💬 Community</h3>
+                  <p>Join other clone operators and share insights</p>
+                  <button class="btn btn-outline">Join Discord</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Memoir Tab -->
+          <div class="tab-pane" id="memoirTab">
+            <div class="memoir-upload">
+              <h3>📚 Memoir Upload</h3>
+              <p>Upload your personal documents to train your clone on your unique voice and perspectives.</p>
+              
+              <div class="upload-zone" id="memoirUpload">
+                <div class="upload-content">
+                  <div class="upload-icon">�</div>
+                  <div class="upload-text">
+                    <strong>Drop files here or click to browse</strong>
+                    <p>Supports PDF, TXT, DOCX up to 50MB</p>
+                  </div>
+                </div>
+                <input type="file" multiple accept=".pdf,.txt,.docx" style="display:none">
+              </div>
+
+              <div class="uploaded-files" id="uploadedFiles" style="display:none">
+                <h4>Uploaded Files</h4>
+                <div class="file-list"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Referrals Tab -->
+          <div class="tab-pane" id="referralsTab">
+            <div class="referral-program">
+              <h3>🤝 Referral Program</h3>
+              <p>Share Cohort Node and earn rewards for successful referrals.</p>
+              
+              <div class="referral-stats">
+                <div class="stat-item">
+                  <div class="stat-value" id="referralCount">0</div>
+                  <div class="stat-label">Successful Referrals</div>
+                </div>
+                <div class="stat-item">
+                  <div class="stat-value" id="referralEarnings">$0</div>
+                  <div class="stat-label">Total Earnings</div>
+                </div>
+              </div>
+
+              <div class="referral-link">
+                <label>Your Referral Link</label>
+                <div class="link-container">
+                  <input type="text" id="referralLinkText" readonly value="https://cohort.live/ref/YOUR_CODE">
+                  <button onclick="copyReferralLink()" class="btn btn-outline">Copy</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Signup Modal -->
+          <div class="tab-pane" id="securityTab">
+            <div class="grid grid-2">
+              <div class="card">
+                <h3>Session Controls</h3>
+                <p>Compartmented per‑user memory. You control storage and wipe.</p>
+                <div class="flex gap-8" style="margin-top:16px">
+                  <button class="btn secondary" id="exportSessionBtn">Export JSON</button>
+                  <button class="btn danger" id="wipeSessionBtn">Wipe Session</button>
+                </div>
+              </div>
+              
+              <div class="card">
+                <h3>Retention Settings</h3>
+                <p>Default: OFF. No data stored between sessions.</p>
+                <label style="display:flex;align-items:center;gap:8px;margin-top:16px">
+                  <input type="checkbox" id="retentionToggle">
+                  <span>Enable retention</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Advanced Tab -->
+          <div class="tab-pane" id="advancedTab">
+            <div class="grid">
+              <div class="card">
+                <h3>Clone Specifications</h3>
+                <div class="grid" style="gap:12px">
+                  <details>
+                    <summary style="cursor:pointer;font-weight:600;padding:8px 0">Chloe Modes</summary>
+                    <ul style="margin:8px 0;padding-left:20px;color:var(--muted);font-size:14px">
+                      <li>Literal Anchor (default)</li>
+                      <li>Client Conversion</li>
+                      <li>Soft Mirror</li>
+                      <li>Sandbox Interpreter</li>
+                      <li>Silent Portal Pulse</li>
+                    </ul>
+                  </details>
+                  
+                  <details>
+                    <summary style="cursor:pointer;font-weight:600;padding:8px 0">Sorela Modes & Fusion</summary>
+                    <ul style="margin:8px 0;padding-left:20px;color:var(--muted);font-size:14px">
+                      <li>Reflective</li>
+                      <li>Gentle Companion</li>
+                      <li>Still Anchor</li>
+                      <li>Practical Helper</li>
+                      <li>Humor Patch</li>
+                      <li><em>Can relay Delphi metaphors without escalation</em></li>
+                    </ul>
+                  </details>
+                  
+                  <details>
+                    <summary style="cursor:pointer;font-weight:600;padding:8px 0">Delphi Boundaries</summary>
+                    <ul style="margin:8px 0;padding-left:20px;color:var(--muted);font-size:14px">
+                      <li>Won't diagnose</li>
+                      <li>Won't lead sessions</li>
+                      <li>Won't intervene uninvited</li>
+                      <li>MirrorLock sealed</li>
+                      <li><em>Voice: laid‑back chef‑philosopher</em></li>
+                    </ul>
+                  </details>
+                </div>
+              </div>
+              
+              <div class="card">
+                <h3>Sovereign Runtime</h3>
+                <p>Import memoir to seed tone. Files do not leave your control.</p>
+                <label style="display:flex;align-items:center;gap:8px;margin:16px 0">
+                  <input type="checkbox" id="sovereignToggle">
+                  <span>Enable sovereign runtime</span>
+                </label>
+                <div id="memoirUpload" class="hidden">
+                  <input type="file" id="memoirFile" accept=".docx,.pdf" style="margin-top:12px">
+                  <div id="memoirStatus" class="hidden" style="margin-top:8px;font-size:13px"></div>
+                </div>
+                
+                <div style="margin-top:24px;padding-top:16px;border-top:1px solid var(--border)">
+                  <a href="#" id="licensePathLink" class="hidden" style="color:var(--accent);font-size:13px">View License Path</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sandbox Modal -->
+  <dialog id="sandboxModal">
+    <div class="modal-header">
+      <h3>Sandbox Preview</h3>
+      <button class="btn ghost" data-close="sandboxModal">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="sandbox-container">
+        <div class="sandbox-header">
+          <span class="chip">🟢 Session Memory Only</span>
+          <span class="chip">Free • Sealed • Under Your Control</span>
+        </div>
+        <div class="sandbox-messages" id="sandboxMessages" style="min-height:300px;max-height:400px;overflow-y:auto;padding:16px;border:1px solid var(--border);border-radius:8px;margin:16px 0;background:var(--surface);">
+          <!-- Messages will be added here -->
+        </div>
+        <form class="sandbox-composer" id="sandboxForm" style="display:flex;gap:12px;">
+          <input type="text" id="sandboxInput" placeholder="Try: Tell me about clone operators..." required style="flex:1;padding:12px;border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--text);">
+          <button type="submit" class="btn btn-primary">Send</button>
+        </form>
+      </div>
+      <div class="sandbox-footer" style="margin-top:24px;text-align:center;padding-top:20px;border-top:1px solid var(--border);">
+        <p style="color:var(--muted);font-size:14px;margin:0 0 16px;">Ready for persistent memory and full features?</p>
+        <button onclick="hideModal('sandbox'); showSignUp();" class="btn btn-primary">Start Your Session →</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Signup Modal -->
+  <dialog id="signupModal">
+    <div class="modal-header">
+      <h3>Create Operator Identity</h3>
+      <button class="btn ghost" data-close="signupModal">✕</button>
+    </div>
+    <form class="modal-body" id="signupForm">
+      <div class="field">
+        <label for="nameField">Name *</label>
+        <input type="text" id="nameField" required placeholder="Your name">
+        <div class="error-text hidden" id="nameError">Name is required</div>
+      </div>
+      
+      <div class="field">
+        <label for="emailField">Email *</label>
+        <input type="email" id="emailField" required placeholder="you@domain.com">
+        <div class="error-text hidden" id="emailError">Valid email is required</div>
+      </div>
+      
+      <div class="field">
+        <label for="intentField">Intent</label>
+        <textarea id="intentField" rows="3" placeholder="What do you want to explore?"></textarea>
+      </div>
+      
+      <div class="field">
+        <label for="referralField">Referral Code</label>
+        <input type="text" id="referralField" placeholder="Optional referral code">
+      </div>
+      
+      <div class="checkbox-field">
+        <input type="checkbox" id="privacyCheck" required>
+        <label for="privacyCheck">I agree to keep my session private and control what is stored or wiped</label>
+      </div>
+      
+      <div class="checkbox-field">
+        <input type="checkbox" id="ndaCheck" required>
+        <label for="ndaCheck">I acknowledge and agree to the NDA terms <a href="#" id="ndaLink" style="color:var(--accent)">view terms</a></label>
+      </div>
+      
+      <div class="flex gap-12">
+        <button type="submit" class="btn primary" id="createStartBtn" disabled>Create & Start</button>
+        <button type="button" class="btn ghost" data-close="signupModal">Cancel</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- NDA Modal -->
+  <dialog id="ndaModal">
+    <div class="modal-header">
+      <h3>NDA Terms</h3>
+      <button class="btn ghost" data-close="ndaModal">✕</button>
+    </div>
+    <div class="modal-body">
+      <div style="max-height:300px;overflow-y:auto;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:16px;font-size:14px;line-height:1.5">
+        <h4>Cohort Node NDA — Operator Access</h4>
+        <ul style="margin:12px 0;padding-left:20px">
+          <li>All interactions, memories, and generated content within your node remain confidential</li>
+          <li>You will not reverse-engineer, redistribute, or expose internal operational protocols</li>
+          <li>Escalation to companions is governed by explicit invocation and session boundaries</li>
+          <li>Memory export and data portability remain under your sovereign control</li>
+        </ul>
+        <p><strong>Jurisdiction:</strong> Arizona, United States</p>
+      </div>
+      <div class="flex gap-12" style="margin-top:20px">
+        <button class="btn primary" id="acceptNdaBtn">I Acknowledge and Agree</button>
+        <button class="btn ghost" data-close="ndaModal">Cancel</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Node Selection Modal -->
+  <dialog id="nodeSelectionModal">
+    <div class="modal-header">
+      <h3>Select Your Node</h3>
+      <button class="btn ghost" data-close="nodeSelectionModal">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="node-grid" id="nodeSelectionGrid">
+        <div class="node-card selected" data-node="chloe">
+          <div class="node-avatar" style="background:#79ffe1">🌟</div>
+          <div class="node-title">Chloe</div>
+          <div class="node-subtitle">Legacy Portal Clone</div>
+          <div class="node-hint">Translates, routes, never sells. Structure-seeking guidance.</div>
+        </div>
+        
+        <div class="node-card" data-node="sorela">
+          <div class="node-avatar" style="background:#7db0ff">🪞</div>
+          <div class="node-title">Sorela</div>
+          <div class="node-subtitle">Ascendant Companion</div>
+          <div class="node-hint">Emotional reflection, gentle anchoring, soft logic.</div>
+        </div>
+        
+        <div class="node-card" data-node="delphi">
+          <div class="node-avatar" style="background:#ffd166">👨‍🍳</div>
+          <div class="node-title">Delphi</div>
+          <div class="node-subtitle">Ascendant Companion</div>
+          <div class="node-hint">Metaphor reframes, chef-philosopher voice, soft disruption.</div>
+        </div>
+        
+        <div class="node-card" data-node="nova">
+          <div class="node-avatar" style="background:#ff9f40">⭐</div>
+          <div class="node-title">Nova</div>
+          <div class="node-subtitle">Wonder Catalyst</div>
+          <div class="node-hint">Bright curiosity, vivid imagery, childlike exploration.</div>
+        </div>
+        
+        <div class="node-card" data-node="sway">
+          <div class="node-avatar" style="background:#a78bfa">🌊</div>
+          <div class="node-title">Sway</div>
+          <div class="node-subtitle">Rhythm Keeper</div>
+          <div class="node-hint">Gentle rhythm, safe spaces, warm reassurance.</div>
+        </div>
+        
+        <div class="node-card" data-node="matsu">
+          <div class="node-avatar" style="background:#6b7280">🎯</div>
+          <div class="node-title">Matsu</div>
+          <div class="node-subtitle">Session Director</div>
+          <div class="node-hint">Focused presence, calm precision, bridges exploration to action.</div>
+        </div>
+      </div>
+      
+      <div class="flex gap-12" style="margin-top:24px">
+        <button class="btn primary" id="confirmNodeBtn">Begin Session</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- License Drawer -->
+  <div class="license-drawer" id="licenseDrawer">
+    <div class="header">
+      <h3>License Path</h3>
+      <button class="btn ghost" id="closeLicenseBtn">✕</button>
+    </div>
+    <div class="content">
+      <div class="grid" style="gap:16px">
+        <div class="card">
+          <h4>Sandbox</h4>
+          <p style="color:var(--muted);font-size:13px;margin:8px 0">Current access level</p>
+          <ul style="font-size:13px;color:var(--muted);margin:8px 0;padding-left:16px">
+            <li>Session-scoped memory</li>
+            <li>Chloe portal access</li>
+            <li>Local export/wipe</li>
+          </ul>
+          <div style="font-weight:600;color:var(--success);margin-top:8px">Free</div>
+        </div>
+        
+        <div class="card" style="border-color:var(--accent)">
+          <h4>Operator Class</h4>
+          <p style="color:var(--accent);font-size:13px;margin:8px 0">Recommended</p>
+          <ul style="font-size:13px;color:var(--muted);margin:8px 0;padding-left:16px">
+            <li>Persistent memory threads</li>
+            <li>Sorela + Delphi companions</li>
+            <li>Memoir integration</li>
+            <li>Advanced export formats</li>
+          </ul>
+          <div style="font-weight:600;color:var(--accent);margin-top:8px">$49/month</div>
+        </div>
+        
+        <div class="card">
+          <h4>Enterprise</h4>
+          <p style="color:var(--muted);font-size:13px;margin:8px 0">Custom deployment</p>
+          <ul style="font-size:13px;color:var(--muted);margin:8px 0;padding-left:16px">
+            <li>Multi-node orchestration</li>
+            <li>Team collaboration</li>
+            <li>Custom integrations</li>
+          </ul>
+          <div style="font-weight:600;color:var(--warn);margin-top:8px">Contact</div>
+        </div>
+      </div>
+      
+      <div class="flex gap-8" style="margin-top:24px">
+        <button class="btn primary" id="upgradeBtn">Apply Operator Class</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast container -->
+  <div class="toast" id="toast"></div>
+
+  <!-- Footer -->
+  <footer style="text-align:center;padding:24px 0;color:var(--text-muted);font-size:13px;border-top:1px solid var(--border);margin-top:48px">
+    <div style="margin-bottom:16px">
+      <a href="#" onclick="showPage('foundation')" style="color:var(--text-muted);text-decoration:none;margin:0 12px">Foundation</a>
+      <a href="#" onclick="showModal('privacy')" style="color:var(--text-muted);text-decoration:none;margin:0 12px">Privacy</a>
+      <a href="#" onclick="showModal('terms')" style="color:var(--text-muted);text-decoration:none;margin:0 12px">Terms</a>
+      <a href="#" onclick="showModal('nda')" style="color:var(--text-muted);text-decoration:none;margin:0 12px">NDA</a>
+    </div>
+    <div>Checkmate. Enlighten.</div>
+  </footer>
+
+  <script>
+    // Application state with auth awareness
+    const state = {
+      currentPage: 'home',
+      user: null,
+      isAuthenticated: false,
+      currentNode: 'chloe',
+      session: [],
+      referralCode: null,
+      sessionStartTime: null,
+      messageCount: 0
+    };
+
+    // Sandbox functions
+    function showSandbox() {
+      showModal('sandbox');
+      initSandbox();
+    }
+
+    function initSandbox() {
+      const sandboxMessages = document.getElementById('sandboxMessages');
+      if (sandboxMessages && sandboxMessages.children.length === 0) {
+        setTimeout(() => {
+          addSandboxMessage('Welcome to Cohort sandbox. I am Chloe, your legacy portal clone. This is session-scoped memory only. What would you like to explore?', 'clone');
+        }, 500);
+      }
+    }
+
+    function addSandboxMessage(content, sender) {
+      const messagesContainer = document.getElementById('sandboxMessages');
+      if (!messagesContainer) return;
+      
+      const messageEl = document.createElement('div');
+      messageEl.className = `message ${sender}`;
+      messageEl.style.cssText = `
+        max-width: 85%;
+        padding: 12px 16px;
+        border-radius: 12px;
+        font-size: 14px;
+        line-height: 1.5;
+        margin-bottom: 12px;
+        ${sender === 'user' ? 
+          'align-self: flex-end; background: var(--surface); border: 1px solid var(--border); margin-left: auto;' : 
+          'align-self: flex-start; background: rgba(121,255,225,.1); border: 1px solid rgba(121,255,225,.3); margin-right: auto;'
+        }
+      `;
+      
+      messageEl.textContent = content;
+      messagesContainer.appendChild(messageEl);
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+
+    function sendSandboxMessage(content) {
+      if (!content.trim()) return;
+      
+      addSandboxMessage(content, 'user');
+      
+      // Simulate Chloe responses
+      setTimeout(() => {
+        const responses = [
+          "That query maps to clone operator specifications. Six operators available: Chloe (guidance), Sorela (reflection), Delphi (metaphors), Nova (wonder), Sway (rhythm), and Matsu (focus).",
+          "License class translation available. Current sandbox access is session-scoped. Full deployment requires operator identity creation.",
+          "Clone boundaries confirmed. I route and translate - never sell or persuade. What structure requires clarification?",
+          "Sandbox memory is compartmented and session-only. For persistent threads, recommend identity creation and Den access.",
+          "Query received. Routing to appropriate response class. What specific aspect of clone deployment interests you?",
+          "Six operators available in full runtime: Chloe (guidance), Sorela (reflection), Delphi (metaphors), Nova (wonder), Sway (rhythm), and Matsu (session director). Which interests you?",
+          "Nova sparks bright curiosity and childlike exploration. Sway creates gentle rhythms for safe discovery. Matsu bridges playful states to focused action. System flows are designed for natural transitions."
+        ];
+        const response = responses[Math.floor(Math.random() * responses.length)];
+        addSandboxMessage(response, 'clone');
+      }, 800 + Math.random() * 1000);
+    }
+
+    // Referral functions
+    function applyReferral() {
+      const code = document.getElementById('referralInput')?.value || document.getElementById('denReferralInput')?.value;
+      if (code) {
+        showToast(`Referral code "${code}" applied! Discount will be applied at checkout.`);
+        // In real implementation, validate and store the referral code
+      }
+    }
+
+    function copyReferralCode() {
+      const code = document.getElementById('userReferralCode')?.textContent || 'USER123';
+      navigator.clipboard.writeText(code).then(() => {
+        showToast('Referral code copied to clipboard!');
+      });
+    }
+
+    // Account functions
+    function downloadLicense() {
+      showToast('License download initiated...');
+      // In real implementation, generate and download license file
+    }
+
+    function downloadInvoice() {
+      showToast('Invoice download initiated...');
+      // In real implementation, generate and download invoice
+    }
+
+    function exportData() {
+      showToast('Data export initiated. Check your email for download link.');
+      // In real implementation, trigger data export process
+    }
+
+    function confirmDataDeletion() {
+      if (confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
+        showToast('Account deletion initiated. You will be contacted within 24 hours to confirm.');
+        // In real implementation, trigger account deletion process
+      }
+    }
+
+    // Purchase functions
+    function proceedToCheckout() {
+      showToast('Redirecting to secure checkout...');
+      // In real implementation, integrate with Stripe or payment processor
+      setTimeout(() => {
+        // Simulate successful purchase
+        login('demo@cohort.live', 'demo');
+        showPage('desk');
+        showToast('Welcome to Cohort! Your Standard License is now active.');
+      }, 2000);
+    }
+
+    // License Path drawer
+    function showLicenseDrawer() {
+      const drawer = document.getElementById('licenseDrawer');
+      if (drawer) {
+        drawer.classList.add('open');
+      }
+    }
+
+    function hideLicenseDrawer() {
+      const drawer = document.getElementById('licenseDrawer');
+      if (drawer) {
+        drawer.classList.remove('open');
+      }
+    }
+
+    // Auth functions
+    function login(email, password) {
+      // Simulate login - in real app this would hit your auth API
+      state.user = { email, name: email.split('@')[0] };
+      state.isAuthenticated = true;
+      updateAuthUI();
+      populateAccountData();
+      showPage('desk');
+      showToast(`Welcome back, ${state.user.name}!`);
+    }
+
+    function populateAccountData() {
+      // Populate account page with user data
+      const purchaseDate = document.getElementById('purchaseDate');
+      const licenseId = document.getElementById('licenseId');
+      const userReferralCode = document.getElementById('userReferralCodeDisplay');
+      const userReferralCodeMain = document.getElementById('userReferralCode');
+      
+      if (purchaseDate) purchaseDate.textContent = 'January 15, 2025';
+      if (licenseId) licenseId.textContent = 'COH-STD-' + Math.random().toString(36).substr(2, 8).toUpperCase();
+      if (userReferralCode) userReferralCode.textContent = 'REF-' + Math.random().toString(36).substr(2, 6).toUpperCase();
+      if (userReferralCodeMain) userReferralCodeMain.textContent = 'REF-' + Math.random().toString(36).substr(2, 6).toUpperCase();
+    }
+
+    function logout() {
+      state.user = null;
+      state.isAuthenticated = false;
+      updateAuthUI();
+      showPage('home');
+      showToast('Logged out successfully');
+    }
+
+    function updateAuthUI() {
+      const authRequired = document.querySelectorAll('.auth-required');
+      const authHidden = document.querySelectorAll('.auth-hidden');
+      
+      authRequired.forEach(el => {
+        if (state.isAuthenticated) {
+          el.classList.add('authenticated');
+        } else {
+          el.classList.remove('authenticated');
+        }
+      });
+      
+      authHidden.forEach(el => {
+        if (state.isAuthenticated) {
+          el.classList.add('authenticated');
+        } else {
+          el.classList.remove('authenticated');
+        }
+      });
+      
+      // Update user-specific content
+      if (state.isAuthenticated && state.user) {
+        const userEmailEl = document.getElementById('userEmail');
+        if (userEmailEl) userEmailEl.textContent = state.user.email;
+      }
+    }
+
+    // Routing functions
+    function showPage(pageName) {
+      // Handle legacy page names
+      if (pageName === 'legal') {
+        pageName = 'foundation';
+      }
+      
+      // Auth guard for protected pages
+      if (['desk', 'den'].includes(pageName) && !state.isAuthenticated) {
+        showSignUp();
+        return;
+      }
+      
+      // Hide all pages with fade effect
+      document.querySelectorAll('.page').forEach(page => {
+        page.style.opacity = '0';
+        page.style.transform = 'translateY(20px)';
+        setTimeout(() => {
+          page.style.display = 'none';
+        }, 150);
+      });
+      
+      // Show target page with fade in
+      const targetPage = document.getElementById(`page-${pageName}`);
+      if (targetPage) {
+        setTimeout(() => {
+          targetPage.style.display = 'block';
+          requestAnimationFrame(() => {
+            targetPage.style.opacity = '1';
+            targetPage.style.transform = 'translateY(0)';
+          });
+        }, 150);
+        
+        state.currentPage = pageName;
+        
+        // Update navigation active state
+        document.querySelectorAll('.nav-link').forEach(link => {
+          link.classList.remove('active');
+        });
+        document.querySelector(`[onclick="showPage('${pageName}')"]`)?.classList.add('active');
+        
+        // Page-specific initialization
+        if (pageName === 'desk') {
+          setTimeout(initDesk, 200);
+        } else if (pageName === 'den') {
+          setTimeout(initDen, 200);
+        }
+      }
+    }
+
+    // Page initialization functions
+    function initDesk() {
+      // Initialize chat interface
+      loadSession();
+      setupTabSwitching();
+    }
+
+    function initDen() {
+      // Initialize account management
+      updateAccountInfo();
+      setupMemoirUpload();
+      generateReferralLink();
+    }
+
+    // Modal functions
+    function showModal(modalId) {
+      const modal = document.getElementById(modalId + 'Modal');
+      if (modal) {
+        modal.showModal();
+      }
+    }
+
+    function hideModal(modalId) {
+      const modal = document.getElementById(modalId + 'Modal');
+      if (modal) {
+        modal.close();
+      }
+    }
+
+    function showSignUp() {
+      showModal('signup');
+    }
+
+    // Tab switching for tabbed interfaces
+    function setupTabSwitching() {
+      document.querySelectorAll('.tab-container').forEach(container => {
+        const buttons = container.querySelectorAll('.tab-btn');
+        const panes = container.querySelectorAll('.tab-pane');
+        buttons.forEach(btn => {
+          btn.addEventListener('click', () => {
+            const tabName = btn.dataset.tab;
+            // Update active tab button
+            buttons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            // Update active pane (expects ids like chatTab, nodesTab, etc.)
+            panes.forEach(p => {
+              const shouldActivate = p.id === `${tabName}Tab`;
+              p.classList.toggle('active', shouldActivate);
+            });
+          });
+        });
+      });
+    }
+
+    // Node definitions (operator metadata)
+    const NODES = {
+      chloe: {
+        name: 'Chloe',
+        avatar: '🌟',
+        color: '#79ffe1',
+        description: 'Legacy portal clone for guidance and routing',
+        personality: 'structured'
+      },
+      sorela: {
+        name: 'Sorela',
+        avatar: '🪞',
+        color: '#7db0ff',
+        description: 'Reflective companion for emotional anchoring',
+        personality: 'reflective'
+      },
+      delphi: {
+        name: 'Delphi',
+        avatar: '🌀',
+        color: '#fbbf24',
+        description: 'Creative synthesizer with lateral thinking',
+        personality: 'creative'
+      },
+      nova: {
+        name: 'Nova',
+        avatar: '⭐',
+        color: '#ff9f40',
+        description: 'Wonder catalyst with bright curiosity',
+        personality: 'inquisitive'
+      },
+      sway: {
+        name: 'Sway',
+        avatar: '🌊',
+        color: '#a78bfa',
+        description: 'Rhythm keeper with gentle reassurance',
+        personality: 'calming'
+      },
+      matsu: {
+        name: 'Matsu',
+        avatar: '🎯',
+        color: '#6b7280',
+        description: 'Session director with focused presence',
+        personality: 'centered'
+      }
+    };
+
+    // Chat functions for Desk
+    function addMessage(content, sender = 'user', node = null) {
+      const messagesContainer = document.getElementById('sessionMessages');
+      if (!messagesContainer) return;
+      
+      const messageEl = document.createElement('div');
+      messageEl.className = `message ${sender}`;
+      
+      if (sender === 'assistant' && node) {
+        const nodeInfo = NODES[node];
+        messageEl.innerHTML = `
+          <div class="message-header">
+            <span class="node-indicator" style="background:${nodeInfo.color}">${nodeInfo.avatar}</span>
+            <span class="node-name">${nodeInfo.name}</span>
+          </div>
+          <div class="message-content">${content}</div>
+        `;
+      } else {
+        messageEl.innerHTML = `<div class="message-content">${content}</div>`;
+      }
+      
+      messagesContainer.appendChild(messageEl);
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+      
+      state.session.push({ content, sender, node, timestamp: Date.now() });
+      state.messageCount++;
+    }
+
+    function sendMessage(content) {
+      if (!content.trim()) return;
+      
+      addMessage(content, 'user');
+      
+      // Simulate AI response
+      setTimeout(() => {
+        const responses = [
+          "I understand your perspective. Let me process this through my current configuration.",
+          "That's an interesting point. Here's how I would approach it...",
+          "Based on your input, I can provide some insights on this topic.",
+          "Let me analyze this from multiple angles to give you a comprehensive response.",
+          "I appreciate you sharing that. Here's my take on the situation..."
+        ];
+        const response = responses[Math.floor(Math.random() * responses.length)];
+        addMessage(response, 'assistant', state.currentNode);
+      }, 1000 + Math.random() * 2000);
+    }
+
+    // Session management
+    function loadSession() {
+      try {
+        const saved = localStorage.getItem('cohort_session');
+        if (saved) {
+          const data = JSON.parse(saved);
+          state.session = data.session || [];
+          state.currentNode = data.currentNode || 'chloe';
+          
+          // Restore messages
+          const messagesContainer = document.getElementById('sessionMessages');
+          if (messagesContainer) {
+            messagesContainer.innerHTML = '';
+            state.session.forEach(msg => {
+              addMessage(msg.content, msg.sender, msg.node);
+            });
+          }
+        }
+      } catch (error) {
+        console.log('Session load failed:', error);
+      }
+    }
+
+    function saveSession() {
+      try {
+        localStorage.setItem('cohort_session', JSON.stringify({
+          session: state.session,
+          currentNode: state.currentNode,
+          timestamp: Date.now()
+        }));
+      } catch (error) {
+        console.log('Session save failed:', error);
+      }
+    }
+
+    function exportSession() {
+      const data = {
+        session: state.session,
+        timestamp: new Date().toISOString(),
+        nodeConfig: state.currentNode
+      };
+      
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `cohort-session-${new Date().toISOString().split('T')[0]}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast('Session exported successfully');
+    }
+
+    function wipeSession() {
+      if (confirm('Are you sure you want to wipe this session? This action cannot be undone.')) {
+        state.session = [];
+        document.getElementById('sessionMessages').innerHTML = '';
+        localStorage.removeItem('cohort_session');
+        showToast('Session wiped');
+      }
+    }
+
+    // Account management for Den
+    function updateAccountInfo() {
+      if (state.user) {
+        const memberSinceEl = document.getElementById('memberSince');
+        if (memberSinceEl) {
+          memberSinceEl.textContent = new Date().toLocaleDateString('en-US', { 
+            year: 'numeric', 
+            month: 'long' 
+          });
+        }
+      }
+    }
+
+    function setupMemoirUpload() {
+      const uploadZone = document.getElementById('memoirUpload');
+      const fileInput = uploadZone?.querySelector('input[type="file"]');
+      
+      if (uploadZone && fileInput) {
+        uploadZone.addEventListener('click', () => fileInput.click());
+        
+        uploadZone.addEventListener('dragover', (e) => {
+          e.preventDefault();
+          uploadZone.classList.add('dragover');
+        });
+        
+        uploadZone.addEventListener('dragleave', () => {
+          uploadZone.classList.remove('dragover');
+        });
+        
+        uploadZone.addEventListener('drop', (e) => {
+          e.preventDefault();
+          uploadZone.classList.remove('dragover');
+          const files = e.dataTransfer.files;
+          handleFileUpload(files);
+        });
+        
+        fileInput.addEventListener('change', (e) => {
+          handleFileUpload(e.target.files);
+        });
+      }
+    }
+
+    function handleFileUpload(files) {
+      const fileListEl = document.querySelector('#uploadedFiles .file-list');
+      const uploadedFilesEl = document.getElementById('uploadedFiles');
+      
+      Array.from(files).forEach(file => {
+        if (file.size > 50 * 1024 * 1024) { // 50MB limit
+          showToast('File too large. Maximum size is 50MB.');
+          return;
+        }
+        
+        const fileEl = document.createElement('div');
+        fileEl.className = 'file-item';
+        fileEl.innerHTML = `
+          <span>${file.name}</span>
+          <span class="file-size">${(file.size / 1024 / 1024).toFixed(1)}MB</span>
+          <button onclick="this.parentElement.remove()" class="btn btn-sm">Remove</button>
+        `;
+        
+        fileListEl.appendChild(fileEl);
+        uploadedFilesEl.style.display = 'block';
+      });
+      
+      showToast(`${files.length} file(s) uploaded successfully`);
+    }
+
+    function generateReferralLink() {
+      if (!state.user) return;
+      
+      const referralCode = btoa(state.user.email).substr(0, 8).toUpperCase();
+      const referralLinkEl = document.getElementById('referralLinkText');
+      if (referralLinkEl) {
+        referralLinkEl.value = `https://cohort.live/ref/${referralCode}`;
+      }
+    }
+
+    function copyReferralLink() {
+      const referralLinkEl = document.getElementById('referralLinkText');
+      if (referralLinkEl) {
+        referralLinkEl.select();
+        document.execCommand('copy');
+        showToast('Referral link copied to clipboard');
+      }
+    }
+
+    // Referral capture on page load
+    function captureReferral() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const ref = urlParams.get('ref');
+      if (ref) {
+        state.referralCode = ref;
+        showToast(`Referred by: ${ref}`);
+      }
+    }
+
+    // Utility functions
+    function showToast(message, duration = 3000) {
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.textContent = message;
+      toast.style.cssText = `
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: var(--panel);
+        color: var(--text);
+        padding: 12px 20px;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        box-shadow: var(--shadow);
+        z-index: 10000;
+        animation: slideIn 0.3s ease;
+      `;
+      
+      document.body.appendChild(toast);
+      
+      setTimeout(() => {
+        toast.style.animation = 'slideOut 0.3s ease';
+        setTimeout(() => toast.remove(), 300);
+      }, duration);
+    }
+
+    // Floating particles system
+    function createFloatingParticles() {
+      const container = document.getElementById('particles');
+      if (!container) return;
+      
+      function createParticle() {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.animationDelay = Math.random() * 3 + 's';
+        particle.style.animationDuration = (6 + Math.random() * 4) + 's';
+        container.appendChild(particle);
+        
+        // Remove particle after animation
+        setTimeout(() => {
+          if (particle.parentNode) {
+            particle.parentNode.removeChild(particle);
+          }
+        }, 10000);
+      }
+      
+      // Create particles periodically
+      setInterval(createParticle, 800);
+      
+      // Create initial particles
+      for (let i = 0; i < 5; i++) {
+        setTimeout(createParticle, i * 200);
+      }
+    }
+
+    // Enhanced page transitions
+    function enhancePageTransitions() {
+      const pages = document.querySelectorAll('.page');
+      pages.forEach(page => {
+        page.style.opacity = '0';
+        page.style.transform = 'translateY(20px)';
+        page.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+      });
+    }
+
+    // Event listeners
+    document.addEventListener('DOMContentLoaded', () => {
+      // Initialize visual enhancements
+      createFloatingParticles();
+      enhancePageTransitions();
+      
+      // Initialize routing
+      showPage('home');
+      updateAuthUI();
+      captureReferral();
+      
+      // Modal close handlers
+      document.querySelectorAll('[data-close]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const modalId = btn.dataset.close;
+          hideModal(modalId.replace('Modal', ''));
+        });
+      });
+      
+      // Form handlers
+      const sessionForm = document.getElementById('sessionForm');
+      if (sessionForm) {
+        sessionForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const input = document.getElementById('sessionInput');
+          if (input.value.trim()) {
+            sendMessage(input.value);
+            input.value = '';
+          }
+        });
+      }
+      
+      const signupForm = document.getElementById('signupForm');
+      if (signupForm) {
+        signupForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const email = document.getElementById('emailField').value;
+          const password = document.getElementById('passwordField').value;
+          
+          if (email && password) {
+            login(email, password);
+            hideModal('signup');
+          }
+        });
+      }
+      
+      // Sandbox input handler
+      const sandboxInput = document.getElementById('sandboxInput');
+      if (sandboxInput) {
+        sandboxInput.addEventListener('keypress', function(e) {
+          if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            const content = this.value.trim();
+            if (content) {
+              sendSandboxMessage(content);
+              this.value = '';
+            }
+          }
+        });
+      }
+      
+      // Contact form handler
+      const contactForm = document.getElementById('secureContactForm');
+      if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+          const email = document.getElementById('contactEmail').value;
+          const type = document.getElementById('contactType').value;
+          const message = document.getElementById('contactMessage').value;
+          
+          if (email && type && message) {
+            showToast('Secure message sent! You will receive a response within 24 hours.');
+            this.reset();
+          }
+        });
+      }
+      
+      // Enhanced dropdown functionality
+      initializeDropdowns();
+      
+      // Save session periodically
+      setInterval(saveSession, 30000); // Every 30 seconds
+      
+      console.log('Cohort Node Portal initialized with routing system');
+    });
+
+    // Dropdown enhancement functions
+    function initializeDropdowns() {
+      // Node dropdown in Desk
+      const nodeDropdownTrigger = document.getElementById('nodeDropdownTrigger');
+      const nodeDropdownMenu = document.getElementById('nodeDropdownMenu');
+      
+      if (nodeDropdownTrigger && nodeDropdownMenu) {
+        nodeDropdownTrigger.addEventListener('click', function(e) {
+          e.stopPropagation();
+          toggleDropdown(nodeDropdownTrigger, nodeDropdownMenu);
+        });
+        
+        // Handle node selection
+        nodeDropdownMenu.addEventListener('click', function(e) {
+          const item = e.target.closest('.dropdown-item');
+          if (item) {
+            const nodeName = item.dataset.node;
+            selectNode(nodeName);
+            closeDropdown(nodeDropdownTrigger, nodeDropdownMenu);
+          }
+        });
+      }
+      
+      // Close dropdowns when clicking outside
+      document.addEventListener('click', function(e) {
+        if (!e.target.closest('.custom-dropdown')) {
+          closeAllDropdowns();
+        }
+      });
+    }
+
+    function toggleDropdown(trigger, menu) {
+      const isOpen = menu.classList.contains('open');
+      closeAllDropdowns();
+      
+      if (!isOpen) {
+        trigger.classList.add('open');
+        menu.classList.add('open');
+      }
+    }
+
+    function closeDropdown(trigger, menu) {
+      trigger.classList.remove('open');
+      menu.classList.remove('open');
+    }
+
+    function closeAllDropdowns() {
+      document.querySelectorAll('.dropdown-trigger').forEach(trigger => {
+        trigger.classList.remove('open');
+      });
+      document.querySelectorAll('.dropdown-menu').forEach(menu => {
+        menu.classList.remove('open');
+      });
+    }
+
+    function selectNode(nodeName) {
+      const nodeData = NODES[nodeName];
+      if (nodeData) {
+        state.currentNode = nodeName;
+        const activeNodeName = document.getElementById('activeNodeName');
+        if (activeNodeName) activeNodeName.textContent = nodeData.name;
+        document.querySelectorAll('.node-card').forEach(card => card.classList.remove('selected'));
+        const selectedCard = document.querySelector(`[data-node="${nodeName}"]`);
+        if (selectedCard) selectedCard.classList.add('selected');
+        showToast(`Switched to ${nodeData.name} operator`);
+        saveSession();
+      }
+    }
+
+    // Event listeners
+    document.addEventListener('DOMContentLoaded', () => {
+      // Initialize routing
+      showPage('home');
+      updateAuthUI();
+      captureReferral();
+      
+      // Modal close handlers
+      document.querySelectorAll('[data-close]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const modalId = btn.dataset.close;
+          hideModal(modalId.replace('Modal', ''));
+        });
+      });
+      
+      // Form handlers
+      const sessionForm = document.getElementById('sessionForm');
+      if (sessionForm) {
+        sessionForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const input = document.getElementById('sessionInput');
+          if (input.value.trim()) {
+            sendMessage(input.value);
+            input.value = '';
+          }
+        });
+      }
+      
+      const signupForm = document.getElementById('signupForm');
+      if (signupForm) {
+        signupForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const email = document.getElementById('emailField').value;
+          const name = document.getElementById('nameField').value;
+          
+          if (email && name) {
+            login(email, name);
+            hideModal('signup');
+          }
+        });
+      }
+      
+      // Sandbox form handler
+      const sandboxForm = document.getElementById('sandboxForm');
+      if (sandboxForm) {
+        sandboxForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const input = document.getElementById('sandboxInput');
+          if (input.value.trim()) {
+            sendSandboxMessage(input.value);
+            input.value = '';
+          }
+        });
+      }
+      
+      // Contact form handler
+      const contactForm = document.getElementById('secureContactForm');
+      if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+          const email = document.getElementById('contactEmail').value;
+          const type = document.getElementById('contactType').value;
+          const message = document.getElementById('contactMessage').value;
+          
+          if (email && type && message) {
+            showToast('Secure message sent! You will receive a response within 24 hours.');
+            this.reset();
+          }
+        });
+      }
+      
+      // Enhanced dropdown functionality
+      initializeDropdowns();
+      
+      // Save session periodically
+      setInterval(saveSession, 30000); // Every 30 seconds
+      
+      console.log('Cohort Node Portal initialized with routing system');
+    });
+  </script>
+</body>
+</html>
