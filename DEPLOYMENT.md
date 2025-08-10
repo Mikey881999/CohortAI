@@ -8,6 +8,26 @@
 - ✅ No external dependencies
 - ✅ Critical path optimized
 - ✅ Error handling for localStorage
+
+## 🚀 GitHub Pages Deployment
+
+### Quick Start
+1. **Get Repository URL**: Go to your GitHub repo → Click green "Code" button → Copy HTTPS URL
+2. **Connect**: `git remote add origin YOUR_REPO_URL`
+3. **Deploy**: `./deploy.sh`
+4. **Enable Pages**: Repository Settings → Pages → Select "gh-pages" branch
+
+### Your Live Site
+After setup: `https://YOUR-USERNAME.github.io/YOUR-REPO/`
+
+### Manual Commands
+```bash
+git remote add origin https://github.com/USERNAME/REPO.git
+git push -u origin main
+git checkout gh-pages
+git merge main
+git push -u origin gh-pages
+```
 - ✅ Graceful degradation
 
 ### Accessibility  
